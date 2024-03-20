@@ -14,9 +14,9 @@ func main() {
     // Create a new Gin router
     router := gin.Default()
     router.Use(cors.Default())
-    router.LoadHTMLGlob("FrontEnd/*.html")
+    router.LoadHTMLGlob("FrontEnd/dist/*.html")
 
-    router.Use(static.Serve("/", static.LocalFile("FrontEnd/dist", true)))
+    router.Use(static.Serve("/", static.LocalFile("FrontEnd/dist/index.html", true)))
 
     router.GET("/home", getHome)
     // Define a route handler
