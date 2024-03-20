@@ -11,15 +11,15 @@ func getHome(c *gin.Context) {
 }
 
 func main() {
-	// Create a new Gin router
-	router := gin.Default()
-	router.Use(cors.Default())
-	router.LoadHTMLGlob("FrontEnd/dist/*.html")
+    // Create a new Gin router
+    router := gin.Default()
+    router.Use(cors.Default())
+    router.LoadHTMLGlob("FrontEnd/*.html")
 
-	router.Use(static.Serve("/", static.LocalFile("FrontEnd/dist", true)))
+    router.Use(static.Serve("/", static.LocalFile("FrontEnd/dist", true)))
 
-	router.GET("/home", getHome)
-	// Define a route handler
-	// Run the server
-	router.Run()
+    router.GET("/home", getHome)
+    // Define a route handler
+    // Run the server
+    router.Run()
 }
