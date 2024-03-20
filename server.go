@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -14,11 +13,9 @@ func main() {
     // Create a new Gin router
     router := gin.Default()
     router.Use(cors.Default())
-    router.LoadHTMLGlob("FrontEnd/dist/*.html")
+    router.LoadHTMLGlob("./FrontEnd/dist/*.html")
 
-    router.Use(static.Serve("/", static.LocalFile("FrontEnd/dist/index.html", true)))
-
-    router.GET("/home", getHome)
+    router.GET("/", getHome)
     // Define a route handler
     // Run the server
     router.Run()
