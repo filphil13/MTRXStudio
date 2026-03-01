@@ -14,6 +14,7 @@ func main() {
     router := gin.Default()
     router.Use(cors.Default())
     router.LoadHTMLGlob("./FrontEnd/dist/*.html")
+    router.Static("/assets", "./FrontEnd/dist/assets")
 
     router.GET("/", getHome)
     // Define a route handler
