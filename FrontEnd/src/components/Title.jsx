@@ -1,7 +1,7 @@
 
 function Title() {
   return (
-    <section className='pb-5 px-5 bg-[#202c39]'>
+		<section id='home' className='pb-5 px-5 bg-[#202c39]'>
       
 		
 		<h1 className="mb-4 text-5xl font-extrabold text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
@@ -12,8 +12,17 @@ function Title() {
 		</h1>
 		
 		<p className="text-lg text-center font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-		Welcome to MegaByte Web Solutions, where innovative web solutions merge with creativity to redefine your online presence and elevate your digital success.
+		We design high-converting websites for growing businesses that want more leads, trust, and sales.
 		</p>
+
+		<div className="mt-8 flex justify-center gap-4">
+			<a href="#contact" className="px-6 py-3 rounded-lg font-semibold text-white bg-emerald-600 hover:bg-emerald-700">
+				Book a Free Discovery Call
+			</a>
+			<a href="#portfolio" className="px-6 py-3 rounded-lg font-semibold text-white border border-gray-400 hover:bg-gray-700">
+				View Portfolio
+			</a>
+		</div>
 
 		<div className="custom-shape-divider-top-1707788886">
 			<svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
