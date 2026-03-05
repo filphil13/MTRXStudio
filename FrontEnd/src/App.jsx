@@ -8,13 +8,13 @@ import Navbar from './components/Navbar'
 
 function App() {
   return (
-      <>
+      <div className=" font-roboto">
           <Navbar />
           <Title />
           <Introduction />
           <Portfolio />
           <ContactUs />
-      </>
+      </div>
   )
 }
 

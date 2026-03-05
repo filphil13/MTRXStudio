@@ -5,15 +5,7 @@ function Introduction() {
 	return (
 		<section id='services' className='bg-[#283845] text-gray-500 pb-20'>  
 
-			<div className='carousel rounded-box'>
-				<div className='carousel-item relative w-full'>
-					<img src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2Vic2l0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60' className='w-full' />
-					<div className='absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2'>
-						<a href='#services' className='btn btn-circle'>❮</a>
-						<a href='#services' className='btn btn-circle'>❯</a>
-					</div>
-				</div>
-			</div>
+			
 
 
 
