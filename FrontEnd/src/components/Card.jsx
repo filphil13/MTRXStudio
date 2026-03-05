@@ -1,32 +1,68 @@
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import './Card.css';
 
+function Card({ title, svg, body, link }) {
+	const [isFlipped, setIsFlipped] = useState(false);
 
-function Card( title, svg, body, link) {
-  return (
-    <div className="p-4 max-w-sm">
-					<div className="flex rounded-lg h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
-						<div className="flex items-center mb-3">
-							<div
-								className="w-12 h-12 p-1 mr-3 inline-flex items-center justify-center rounded-full dark:bg-indigo-500 bg-indigo-500 text-white flex-shrink-0">
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			setIsFlipped((prev) => !prev);
+		}
+	};
+
+	return (
+		<div className="p-4 w-full max-w-sm">
+			<div
+				role="button"
+				tabIndex={0}
+				onClick={() => setIsFlipped((prev) => !prev)}
+				onKeyDown={handleKeyDown}
+				className={`flip-card ${isFlipped ? 'flipped' : ''}`}
+			>
+				<div className="flip-card-inner">
+					<div className="flip-face flip-front flex h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
+						<div className="itemsx-center mb-3">
+							<div className="w-56 h-56 items-center justify-center rounded-full dark:bg-indigo-500 bg-indigo-500 text-white flex-shrink-0">
 								{svg}
 							</div>
-							<h2 className="text-white dark:text-white text-lg font-medium">
-                {title}
-              </h2>
+							<h2 className="text-white dark:text-white text-lg font-medium">{title}</h2>
 						</div>
 						<div className="flex flex-col justify-between flex-grow">
-							<p className="leading-relaxed text-base text-center text-white dark:text-gray-300">
-                {body}
-							</p>
-							<a href={link} className="mt-3 text-black dark:text-white hover:text-blue-600 inline-flex items-center">Learn More
-								<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-									strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
-									<path d="M5 12h14M12 5l7 7-7 7"></path>
-								</svg>
-							</a>
+							<p className="leading-relaxed text-base text-center text-white dark:text-gray-300">Click to flip and learn more.</p>
 						</div>
 					</div>
+
+					<div className="flip-face flip-back items-center flex h-full dark:bg-gray-800 bg-[#1f2d3a] p-8 flex-col">
+						<h2 className="text-white text-lg font-medium mb-3">{title}</h2>
+						<p className="leading-relaxed text-base text-center text-gray-200">{body}</p>
+						<a href={link} className="mt-6 text-white hover:text-blue-400 inline-flex items-center justify-center">
+							Learn More
+							<svg
+								fill="none"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								className="w-4 h-4 ml-2"
+								viewBox="0 0 24 24"
+							>
+								<path d="M5 12h14M12 5l7 7-7 7"></path>
+							</svg>
+						</a>
+					</div>
 				</div>
-  );
+			</div>
+		</div>
+	);
 }
+
+Card.propTypes = {
+	title: PropTypes.string.isRequired,
+	svg: PropTypes.node.isRequired,
+	body: PropTypes.string.isRequired,
+	link: PropTypes.string.isRequired,
+};
 
 export default Card;
