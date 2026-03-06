@@ -1,7 +1,7 @@
 
 function Navbar() {
   return (
-        <nav className="h-20 border-gray-200 bg-[#202c39]">
+        <nav className="h-12 border-gray-200 bg-[#202c39]">
             <div className="h-full max-w-screen-xl mx-auto px-6 flex items-center justify-center">
                 <button
                     data-collapse-toggle="navbar-default"
