@@ -2,7 +2,7 @@ import MTRXLogo from '../assets/1.svg';
 
 function Title() {
 	return (
-		<section id='home' className='min-h-[calc(100vh-7rem)] pt-0 bg-[#202c39] justify-start'>
+		<section id='home' className='min-h-[calc(100vh-7rem)] pt-0 bg-[#202c39] justify-center items-center text-center'>
 			
 			<img src={MTRXLogo} alt="Company Logo" className='h-1/6' />
 
@@ -18,10 +18,10 @@ function Title() {
 			</p>
 
 			<div className="mt-8 flex justify-center gap-4">
-				<a href="#contact" className="px-6 py-3 rounded-lg font-semibold text-white bg-emerald-600 hover:bg-emerald-700">
+				<a href="#contact" className="px-6 py-3 rounded-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-400 border border-emerald-300/30 shadow-lg shadow-emerald-900/30">
 					Book a Free Discovery Call
 				</a>
-				<a href="#portfolio" className="px-6 py-3 rounded-lg font-semibold text-white border border-gray-400 hover:bg-gray-700">
+				<a href="#portfolio" className="px-6 py-3 rounded-lg font-semibold text-slate-100 bg-[#334a5d] border border-sky-300/30 hover:bg-[#3f5d75]">
 					View Portfolio
 				</a>
 			</div>
