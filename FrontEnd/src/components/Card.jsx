@@ -23,14 +23,13 @@ function Card({ title, svg, body, link }) {
 			>
 				<div className="flip-card-inner">
 					<div className="flip-face flip-front flex h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
-						<div className="itemsx-center mb-3">
-							<div className="w-56 h-56 items-center justify-center rounded-full dark:bg-indigo-500 bg-indigo-500 text-white flex-shrink-0">
+						<div className="mb-3 text-center">
+							<div className="card-icon-wrap w-52 h-52 mx-auto my-6 flex items-center justify-center text-white">
 								{svg}
 							</div>
-							<h2 className="text-white dark:text-white text-lg font-medium">{title}</h2>
-						</div>
-						<div className="flex flex-col justify-between flex-grow">
-							<p className="leading-relaxed text-base text-center text-white dark:text-gray-300">Click to flip and learn more.</p>
+							<h1 className="text-white dark:text-white text-lg font-medium">
+								{title}
+							</h1>
 						</div>
 					</div>
 
