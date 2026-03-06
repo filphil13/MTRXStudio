@@ -28,9 +28,12 @@ function ContactUs() {
 	return (
 		<section id='contact' className='bg-[#748cab] min-h-[calc(100vh-7rem)]'>
 			<div className="py-4 lg:py-8 px-4 mx-auto rounded-xl border-2 border-black max-w-screen-md bg-[#202c39]">
-				<h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-300">
-					Contact Us
-				</h2>
+				<h2 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+				<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+					Contact
+				</span>
+				{' '}Us
+			</h2>
 				<p className="mb-8 lg:mb-16 font-light text-center text-gray-300 sm:text-xl">
 					Have a brilliant tech concept for your business or in need of expert guidance to launch your online store? Reach out to us today, and let&apos;s turn your ideas into reality.
 				</p>
@@ -85,13 +88,9 @@ function ContactUs() {
 					</button>
 				</form>
 			</div>
-			<div className="custom-shape-divider-top-1707788955">
-			<svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-				<path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-			</svg>
-		</div>
 		</section>
 	);
 }
 
 export default ContactUs;
+

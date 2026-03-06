@@ -2,9 +2,9 @@ import MTRXLogo from '../assets/1.svg';
 
 function Title() {
 	return (
-		<section id='home' className='min-h-[calc(100vh-12rem)] pt-0 bg-[#202c39] justify-start'>
+		<section id='home' className='min-h-[calc(100vh-7rem)] pt-0 bg-[#202c39] justify-start'>
 			
-			<img src={MTRXLogo} alt="Company Logo" className='h-96' />
+			<img src={MTRXLogo} alt="Company Logo" className='h-1/6' />
 
 			<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
 				<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">

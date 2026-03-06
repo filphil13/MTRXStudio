@@ -6,9 +6,12 @@ function Introduction() {
   return (
     <section id='services' className='bg-[#283845] min-h-[calc(100vh-7rem)] text-gray-500'>
 
-      <h2 className='mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white'>
-        What We Do
-      </h2>
+      	<h2 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+				<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+					What
+				</span>
+				{' '}We Do
+		</h2>
 
       <div className="flex flex-wrap justify-center gap-2 mt-10 w-full max-w-screen-xl px-2">
         <Card
@@ -45,9 +48,7 @@ function Introduction() {
           link="#contact"
         />
 
-		<p className="text-lg px-5 text-center font-normal pb-5  lg:text-xl dark:text-gray-400">
-        We&apos;re your premier destination for cutting-edge web solutions tailored to meet your unique business needs. With a passion for innovation and a commitment to excellence, we specialize in crafting stunning websites, developing powerful e-commerce platforms, and providing expert consultation to help you thrive in the digital landscape. Whether you&apos;re a startup looking to make your mark or an established enterprise seeking to enhance your online presence, our dedicated team is here to turn your vision into reality. Let&apos;s collaborate and elevate your brand to new heights online.
-      </p>
+		
       </div>
 
       

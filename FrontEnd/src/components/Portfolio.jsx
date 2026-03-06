@@ -2,10 +2,13 @@ function Portfolio() {
   return (
     <section id='portfolio' className='bg-[#202c39] min-h-[calc(100vh-7rem)] text-gray-300 px-5 py-16'>
       <div className='max-w-screen-xl mx-auto'>
-        <h2 className='text-4xl font-extrabold text-center mb-4 text-white'>Recent Work</h2>
-        <p className='text-center text-gray-400 mb-10'>
-          A sample of business websites designed to convert visitors into leads.
-        </p>
+        <h2 className="mb-4 text-center text-6xl font-extrabold font-kode text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+				<span className="text-transparent  bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+					Recent
+				</span>
+				{' '}Work
+		</h2>
+
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           <article className='rounded-lg border border-gray-700 bg-[#283845] p-6'>
