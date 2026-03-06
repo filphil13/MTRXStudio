@@ -26,7 +26,7 @@ function ContactUs() {
 	};
 
 	return (
-		<section id='contact' className='bg-[#748cab] pb-10'>
+		<section id='contact' className='bg-[#748cab] min-h-[calc(100vh-7rem)]'>
 			<div className="py-4 lg:py-8 px-4 mx-auto rounded-xl border-2 border-black max-w-screen-md bg-[#202c39]">
 				<h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-300">
 					Contact Us

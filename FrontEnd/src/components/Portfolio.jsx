@@ -1,6 +1,6 @@
 function Portfolio() {
   return (
-    <section id='portfolio' className='bg-[#202c39] text-gray-300 px-5 py-16'>
+    <section id='portfolio' className='bg-[#202c39] min-h-[calc(100vh-7rem)] text-gray-300 px-5 py-16'>
       <div className='max-w-screen-xl mx-auto'>
         <h2 className='text-4xl font-extrabold text-center mb-4 text-white'>Recent Work</h2>
         <p className='text-center text-gray-400 mb-10'>
