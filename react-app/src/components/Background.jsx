@@ -20,9 +20,9 @@ const RENDERER_MAX_PIXEL_RATIO = 2;
 // Model variables
 const MODEL_PATH = '/Logo.obj';
 const MODEL_COLOR = 0xffffff;
-const MODEL_INITIAL_TILT_X = 0.2;
-const MODEL_INITIAL_TILT_Z = 0.2;
-const MODEL_SPIN_SPEED_Y = 0.005;
+const MODEL_INITIAL_TILT_X = 0.5;
+const MODEL_INITIAL_TILT_Z = 0.4;
+const MODEL_SPIN_SPEED_Y = 0.0075;
 
 // Scroll variables
 const SCROLL_DISTANCE_FACTOR = 0.05;
@@ -101,7 +101,7 @@ function updateCameraAndRendererSize(camera, renderer) {
 
 function getScrollTargetY() {
   return CAMERA_START_Y - window.scrollY * SCROLL_DISTANCE_FACTOR;
-}
+}``
 
 function Background() {
   const canvasRef = useRef(null);
@@ -140,7 +140,6 @@ function Background() {
         targetCameraY,
         SCROLL_SMOOTHING
       );
-      camera.lookAt(CAMERA_LOOK_AT_X, CAMERA_LOOK_AT_Y, CAMERA_LOOK_AT_Z);
 
       if (obj) {
         obj.rotateY(MODEL_SPIN_SPEED_Y);
