@@ -6,6 +6,7 @@ import Portfolio from './components/Portfolio'
 import ContactUs from './components/ContactUs'
 import Navbar from './components/Navbar'
 import { useRef } from 'react';
+import Background from './components/Background'
 
 function App() {
 
@@ -25,11 +26,11 @@ function App() {
   };
 
     return (
-            <div className=" font-roboto justify-end">
-                
-                
+          <>
+            <Background id="backbg"/>
+            <div className=" font-roboto justify-end bg-transparent">
                 <div ref={TitleRef}>
-                    <Title />
+                    <Title  />
                 </div>
                 <div className="w-full flex justify-end px-6">
                   <button type="button" onClick={() => scrollToSection(IntroRef)} className='bg-transparent border-none my-6'>
@@ -41,7 +42,7 @@ function App() {
 
                 <div ref={IntroRef}>
                   <Introduction />
-                  <div className="bg-[#283845] w-full flex justify-end px-6">
+                  <div className="w-full flex justify-end px-6">
                   <button type="button" onClick={() => scrollToSection(PortfolioRef)} className='bg-transparent border-none my-6'>
                     <svg className='w-16 h-16' dataSlot="icon" fill="none" strokeWidth={1.0} stroke="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5" />
@@ -63,7 +64,7 @@ function App() {
                 
                 <div ref={ContactRef}>
                   <ContactUs />
-                  <div className="bg-[#283845] w-full flex justify-end px-6">
+                  <div className="w-full flex justify-end px-6">
                   <button type="button" onClick={() => scrollToSection(TitleRef)} className='bg-transparent border-none my-6'>
                     <svg className='w-16 h-16' dataSlot="icon" fill="#FFFFFF" strokeWidth={1.0} stroke="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5" />
@@ -73,6 +74,7 @@ function App() {
                 </div>
 
             </div>
+          </>
     )
 }
 

@@ -1,6 +1,5 @@
 import { useRef,useState } from 'react';
 import emailjs from '@emailjs/browser';
-import './ContactUs.css';
 
 function ContactUs() {
 	const form = useRef();
@@ -27,7 +26,7 @@ function ContactUs() {
 	};
 
 	return (
-		<section className='bg-[#283845] pt-0 min-h-[calc(100vh-7rem)] flex items-center justify-center'>
+		<section className='pt-0 min-h-[calc(100vh-7rem)] flex items-center justify-center'>
 			<div className="grid grid-cols-1 max-lg:grid-cols-2 text-center items-center gap-16 p-6 mx-auto w-full max-w-2xl  min-h-[calc(100vh-7rem)] justify-center">
 				<div>
 					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
