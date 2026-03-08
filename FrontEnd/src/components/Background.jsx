@@ -2,33 +2,35 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-const CONFIG = {
-  camera: {
-    fov: 75,
-    near: 0.1,
-    far: 1000,
-    position: { x: 0, y: 0, z: 5 },
-    lookAt: { x: 0, y: 0, z: 0 },
-  },
-  renderer: {
-    antialias: true,
-    maxPixelRatio: 2,
-  },
-  model: {
-    path: '/Logo.obj',
-    color: 0xffffff,
-    initialTilt: { x: 0.2, z: 0.2 },
-    spinSpeedY: 0.005,
-  },
-  scroll: {
-    distanceFactor: 0.05,
-    smoothing: 0.08,
-  },
-  canvas: {
-    id: 'background',
-    className: 'fixed top-0 left-0 w-full h-full',
-  },
-};
+// Camera variables
+const CAMERA_FOV = 75;
+const CAMERA_NEAR = 0.1;
+const CAMERA_FAR = 1000;
+const CAMERA_START_X = 0;
+const CAMERA_START_Y = 0;
+const CAMERA_START_Z = 5;
+const CAMERA_LOOK_AT_X = 0;
+const CAMERA_LOOK_AT_Y = 0;
+const CAMERA_LOOK_AT_Z = 0;
+
+// Renderer variables
+const RENDERER_ANTIALIAS = true;
+const RENDERER_MAX_PIXEL_RATIO = 2;
+
+// Model variables
+const MODEL_PATH = '/Logo.obj';
+const MODEL_COLOR = 0xffffff;
+const MODEL_INITIAL_TILT_X = 0.2;
+const MODEL_INITIAL_TILT_Z = 0.2;
+const MODEL_SPIN_SPEED_Y = 0.005;
+
+// Scroll variables
+const SCROLL_DISTANCE_FACTOR = 0.05;
+const SCROLL_SMOOTHING = 0.08;
+
+// Canvas variables
+const CANVAS_ID = 'background';
+const CANVAS_CLASS_NAME = 'fixed top-0 left-0 w-full h-full';
 
 function getViewportSize() {
   return {
@@ -40,18 +42,14 @@ function getViewportSize() {
 function createCamera() {
   const { width, height } = getViewportSize();
   const camera = new THREE.PerspectiveCamera(
-    CONFIG.camera.fov,
+    CAMERA_FOV,
     width / height,
-    CONFIG.camera.near,
-    CONFIG.camera.far
+    CAMERA_NEAR,
+    CAMERA_FAR
   );
 
-  camera.position.set(
-    CONFIG.camera.position.x,
-    CONFIG.camera.position.y,
-    CONFIG.camera.position.z
-  );
-  camera.lookAt(CONFIG.camera.lookAt.x, CONFIG.camera.lookAt.y, CONFIG.camera.lookAt.z);
+  camera.position.set(CAMERA_START_X, CAMERA_START_Y, CAMERA_START_Z);
+  camera.lookAt(CAMERA_LOOK_AT_X, CAMERA_LOOK_AT_Y, CAMERA_LOOK_AT_Z);
   return camera;
 }
 
@@ -59,11 +57,11 @@ function createRenderer(canvas) {
   const { width, height } = getViewportSize();
   const renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: CONFIG.renderer.antialias,
+    antialias: RENDERER_ANTIALIAS,
   });
 
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, CONFIG.renderer.maxPixelRatio));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, RENDERER_MAX_PIXEL_RATIO));
   return renderer;
 }
 
@@ -79,11 +77,11 @@ function loadObjectModel(scene, material, onLoaded) {
   const loader = new OBJLoader();
 
   loader.load(
-    CONFIG.model.path,
+    MODEL_PATH,
     (object) => {
       applyMaterialToMeshChildren(object, material);
-      object.rotation.x += CONFIG.model.initialTilt.x;
-      object.rotation.z += CONFIG.model.initialTilt.z;
+      object.rotation.x += MODEL_INITIAL_TILT_X;
+      object.rotation.z += MODEL_INITIAL_TILT_Z;
       scene.add(object);
       onLoaded(object);
     },
@@ -102,7 +100,7 @@ function updateCameraAndRendererSize(camera, renderer) {
 }
 
 function getScrollTargetY() {
-  return CONFIG.camera.position.y - window.scrollY * CONFIG.scroll.distanceFactor;
+  return CAMERA_START_Y - window.scrollY * SCROLL_DISTANCE_FACTOR;
 }
 
 function Background() {
@@ -115,7 +113,7 @@ function Background() {
     const scene = new THREE.Scene();
     const camera = createCamera();
     const renderer = createRenderer(canvas);
-    const objMaterial = new THREE.MeshBasicMaterial({ color: CONFIG.model.color });
+    const objMaterial = new THREE.MeshBasicMaterial({ color: MODEL_COLOR });
     let obj = null;
     let targetCameraY = camera.position.y;
 
@@ -140,12 +138,12 @@ function Background() {
       camera.position.y = THREE.MathUtils.lerp(
         camera.position.y,
         targetCameraY,
-        CONFIG.scroll.smoothing
+        SCROLL_SMOOTHING
       );
-      camera.lookAt(CONFIG.camera.lookAt.x, CONFIG.camera.lookAt.y, CONFIG.camera.lookAt.z);
+      camera.lookAt(CAMERA_LOOK_AT_X, CAMERA_LOOK_AT_Y, CAMERA_LOOK_AT_Z);
 
       if (obj) {
-        obj.rotateY(CONFIG.model.spinSpeedY);
+        obj.rotateY(MODEL_SPIN_SPEED_Y);
       }
 
       renderer.render(scene, camera);
@@ -166,8 +164,8 @@ function Background() {
   return (
     <canvas
       ref={canvasRef}
-      id={CONFIG.canvas.id}
-      className={CONFIG.canvas.className}
+      id={CANVAS_ID}
+      className={CANVAS_CLASS_NAME}
     />
   );
 }
