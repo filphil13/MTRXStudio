@@ -140,7 +140,6 @@ function Background() {
         targetCameraY,
         SCROLL_SMOOTHING
       );
-      camera.lookAt(CAMERA_LOOK_AT_X, CAMERA_LOOK_AT_Y, CAMERA_LOOK_AT_Z);
 
       if (obj) {
         obj.rotateY(MODEL_SPIN_SPEED_Y);
