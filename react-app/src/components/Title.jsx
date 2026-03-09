@@ -1,11 +1,10 @@
-import MTRXLogo from '../assets/1.svg';
 
 function Title() {
 	return (
 		<section id='home' className='flex w-full pt-0 flex-col bg-transparent items-center md:flex-col'>
 			
 			<div className='flex items-center min-h-[50vh] justify-center text-center md:w-full'>
-				<h1 className=" text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+				<h1 className=" text-6xl pb-28 font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
 					<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
 						MTRX
 					</span>
