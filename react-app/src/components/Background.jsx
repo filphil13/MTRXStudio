@@ -38,6 +38,13 @@ const RING_TEXT_COUNT = 12;
 const RING_TEXT_SIZE = 0.5;
 const RING_TEXT_DEPTH = 0.01;
 
+
+//Star Variables
+const STAR_COUNT = 500;
+const STAR_SIZE = 0.1;
+const STAR_COLOR = 0xffffff;
+const STAR_SPREAD = 100;
+
 // Scroll variables
 const SCROLL_DISTANCE_FACTOR = 0.05;
 const SCROLL_SMOOTHING = 0.08;
@@ -125,8 +132,6 @@ function Background() {
 	ring.rotation.x = 0.3; // tilt of the ring
 	group.add(ring);
 
-
-
 	////////////////
 	// MTRX Text Band
 	////////////////
@@ -165,11 +170,24 @@ function Background() {
 		}
 	);
 
+	////////////////
+	// Stars
+	////////////////
+	const addStar = () => {
+		const geometry = new THREE.SphereGeometry(STAR_SIZE, 24, 24);
+		const material = new THREE.MeshBasicMaterial({ color: STAR_COLOR });
+		const star = new THREE.Mesh(geometry, material);
+
+		const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(STAR_SPREAD));
+		star.position.set(x,y,z);
+		scene.add(star);
+	}
+
 	group.scale.set(0.5, 0.5, 0.5);
 	group.position.set(MODEL_POSITION_X, MODEL_POSITION_Y, MODEL_POSITION_Z);
 	group.rotation.set(MODEL_INITIAL_TILT_X, MODEL_INITIAL_TILT_Y, MODEL_INITIAL_TILT_Z);
 
-
+	Array(STAR_COUNT).fill().forEach(addStar);
 
 	const onResize = () => {
 	  updateCameraAndRendererSize(camera, renderer);
