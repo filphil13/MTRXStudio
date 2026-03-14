@@ -6,15 +6,14 @@ import ContactUs from "./components/ContactUs";
 import Background from "./components/Background";
 
 function App() {
-
-    //sometimes i touch my pp at night
+	//sometimes i touch my pp at night
 	return (
 		<>
 			<Background id="backbg" />
 			<Title />
 			<Introduction />
 			<Portfolio />
-			<ContactUs />	
+			<ContactUs />
 		</>
 	);
 }
