@@ -20,6 +20,7 @@ export default {
 					accent: "#FF2EDB", // Neon Magenta (Primary CTA / Highlight)
 					glow: "#FF6BFF", // Cyber Pink Glow (Hover / Effects)
 					purple: "#A855F7", // Electric Purple (Gradient Start)
+					purpleHover: "#9333EA", // Electric Purple Hover (Gradient End)
 				},
 			},
 		},

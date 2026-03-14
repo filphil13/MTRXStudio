@@ -22,7 +22,17 @@ function Title() {
 				<div className="mt-8 flex justify-center gap-4">
 					<a
 						href="#contact"
-						className="px-6 py-3 rounded-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-400 border border-emerald-300/30 shadow-lg shadow-emerald-900/30"
+						className="
+						px-6 py-3 rounded-lg font-semibold text-cyber-text
+						border border-cyber-border
+						bg-cyber-purple
+						bg-[length:0%_100%]
+						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+						bg-no-repeat
+						hover:bg-[length:100%_100%]
+						transition-all duration-300
+						shadow-lg hover:shadow-cyber-glow/50
+  "
 					>
 						Book a Free Discovery Call
 					</a>
