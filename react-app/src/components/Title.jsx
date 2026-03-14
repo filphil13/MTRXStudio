@@ -25,7 +25,7 @@ function Title() {
 						className="
 						px-6 py-3 rounded-lg font-semibold text-cyber-text
 						border border-cyber-border
-						bg-cyber-purple
+						bg-cyber-accent
 						bg-[length:0%_100%]
 						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
 						bg-no-repeat
@@ -38,7 +38,13 @@ function Title() {
 					</a>
 					<a
 						href="#portfolio"
-						className="px-6 py-3 rounded-lg font-semibold text-slate-100 bg-[#334a5d] border border-sky-300/30 hover:bg-[#3f5d75]"
+						className="px-6 py-3 rounded-lg font-semibold
+						text-cyber-accent bg-cyber-void border border-cyber-border
+						hover:bg-cyber-purpleHover
+						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+						bg-[length:0%_100%] bg-no-repeat hover:bg-[length:100%_100%]
+						transition-all duration-300 shadow-lg hover:shadow-cyber-glow/50
+						hover:text-cyber-text"
 					>
 						View Portfolio
 					</a>
