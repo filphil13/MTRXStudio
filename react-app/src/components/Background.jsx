@@ -175,7 +175,10 @@ function Background() {
 	////////////////
 	const addStar = () => {
 		const geometry = new THREE.SphereGeometry(STAR_SIZE, 24, 24);
-		const material = new THREE.MeshBasicMaterial({ color: STAR_COLOR });
+		const material = new THREE.MeshBasicMaterial({
+		color: STAR_COLOR,
+		blending: THREE.AdditiveBlending // Makes the star appear to glow
+		});
 		const star = new THREE.Mesh(geometry, material);
 
 		const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(STAR_SPREAD));
