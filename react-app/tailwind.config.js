@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				kode: ['"Kode Mono", monospace'],
+				kode: ["Kode Mono", "monospace"],
 				roboto: ["Roboto", "sans-serif"],
 			},
 			colors: {
