@@ -26,8 +26,6 @@ function Title() {
 					</a>
 				</div>
 			</div>
-
-		
 		</section>
 	);
 }

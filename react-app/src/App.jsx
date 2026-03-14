@@ -7,16 +7,15 @@ import Background from "./components/Background";
 
 function App() {
 
-  return (
-    <>
-        <Background id="backbg" />
-          <Title />
-          <Introduction />
-          <Portfolio />
-          <ContactUs />
-          
-    </>
-  );
+	return (
+		<>
+			<Background id="backbg" />
+			<Title />
+			<Introduction />
+			<Portfolio />
+			<ContactUs />	
+		</>
+	);
 }
 
 export default App;

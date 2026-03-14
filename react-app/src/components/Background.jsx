@@ -50,18 +50,18 @@ const CANVAS_CLASS_NAME = 'fixed top-0 left-0 w-full h-full';
 
 function getViewportSize() {
   return {
-    width: window.innerWidth,
-    height: window.innerHeight,
+	width: window.innerWidth,
+	height: window.innerHeight,
   };
 }
 
 function createCamera() {
   const { width, height } = getViewportSize();
   const camera = new THREE.PerspectiveCamera(
-    CAMERA_FOV,
-    width / height,
-    CAMERA_NEAR,
-    CAMERA_FAR
+	CAMERA_FOV,
+	width / height,
+	CAMERA_NEAR,
+	CAMERA_FAR
   );
 
   camera.position.set(CAMERA_START_X, CAMERA_START_Y, CAMERA_START_Z);
@@ -72,8 +72,8 @@ function createCamera() {
 function createRenderer(canvas) {
   const { width, height } = getViewportSize();
   const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias: RENDERER_ANTIALIAS,
+	canvas,
+	antialias: RENDERER_ANTIALIAS,
   });
 
   renderer.setSize(width, height);
@@ -97,126 +97,126 @@ function Background() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+	const canvas = canvasRef.current;
+	if (!canvas) return;
 
-    const scene = new THREE.Scene();
-    const camera = createCamera();
-    const renderer = createRenderer(canvas);
-    const group = new THREE.Group();
-    scene.add(group);
-    let targetCameraY = camera.position.y;
+	const scene = new THREE.Scene();
+	const camera = createCamera();
+	const renderer = createRenderer(canvas);
+	const group = new THREE.Group();
+	scene.add(group);
+	let targetCameraY = camera.position.y;
 
-    ////////////////
-    // Globe
-    ////////////////
+	////////////////
+	// Globe
+	////////////////
 
-    const globe = new THREE.Mesh(
-      new THREE.SphereGeometry(3,32,32),
-      new THREE.MeshBasicMaterial({ wireframe:true, color: MODEL_COLOR })
-    );
-    group.add(globe);
+	const globe = new THREE.Mesh(
+	  new THREE.SphereGeometry(3,32,32),
+	  new THREE.MeshBasicMaterial({ wireframe:true, color: MODEL_COLOR })
+	);
+	group.add(globe);
 
-    ////////////////
-    // Single Ring (invisible)
-    ////////////////
+	////////////////
+	// Single Ring (invisible)
+	////////////////
 
-    const ring = new THREE.Group();
-    ring.rotation.x = 0.3; // tilt of the ring
-    group.add(ring);
-
-
-
-    ////////////////
-    // MTRX Text Band
-    ////////////////
-
-    const loader = new FontLoader();
-    loader.load(
-      'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
-      (font) => {
-        const material = new THREE.MeshBasicMaterial({ color: RING_TEXT_COLOR });
-        const gap = (2 * Math.PI) / RING_TEXT_COUNT;
-
-        for (let i = 0; i < RING_TEXT_COUNT; i += 1) {
-          const angle = i * gap;
-
-          const geo = new TextGeometry(RING_TEXT_LABEL, {
-            font,
-            size: RING_TEXT_SIZE,
-            // In current three versions, TextGeometry uses `depth` (not `height`).
-            depth: RING_TEXT_DEPTH,
-          });
-          geo.center();
-
-          const mesh = new THREE.Mesh(geo, material);
-
-          // Position along the ring
-          mesh.position.x = Math.cos(angle) * RING_TEXT_RADIUS;
-          mesh.position.z = Math.sin(angle) * RING_TEXT_RADIUS;
-          mesh.position.y = 0;
-
-          // Face outward
-          mesh.lookAt(0, 0, 0);
-          mesh.rotation.y += Math.PI;
-
-          ring.add(mesh);
-        }
-      }
-    );
-
-    group.scale.set(0.5, 0.5, 0.5);
-    group.position.set(MODEL_POSITION_X, MODEL_POSITION_Y, MODEL_POSITION_Z);
-    group.rotation.set(MODEL_INITIAL_TILT_X, MODEL_INITIAL_TILT_Y, MODEL_INITIAL_TILT_Z);
+	const ring = new THREE.Group();
+	ring.rotation.x = 0.3; // tilt of the ring
+	group.add(ring);
 
 
 
-    const onResize = () => {
-      updateCameraAndRendererSize(camera, renderer);
-    };
+	////////////////
+	// MTRX Text Band
+	////////////////
 
-    const onScroll = () => {
-      targetCameraY = getScrollTargetY();
-    };
+	const loader = new FontLoader();
+	loader.load(
+		'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+		(font) => {
+			const material = new THREE.MeshBasicMaterial({ color: RING_TEXT_COLOR });
+			const gap = (2 * Math.PI) / RING_TEXT_COUNT;
 
-    window.addEventListener('resize', onResize);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+			for (let i = 0; i < RING_TEXT_COUNT; i += 1) {
+				const angle = i * gap;
 
-    let frameId = 0;
-    const animate = () => {
-        camera.position.y = THREE.MathUtils.lerp(
-        camera.position.y,
-        targetCameraY,
-        SCROLL_SMOOTHING
-      );
+				const geo = new TextGeometry(RING_TEXT_LABEL, {
+					font,
+					size: RING_TEXT_SIZE,
+					// In current three versions, TextGeometry uses `depth` (not `height`).
+					depth: RING_TEXT_DEPTH,
+				});
+				geo.center();
 
-      if (globe && ring) {
-        globe.rotateY(MODEL_SPIN_SPEED_Y);
-        ring.rotateY(RING_SPIN_SPEED_Y); // rotate the band in opposite direction and faster
-      }
-      
+				const mesh = new THREE.Mesh(geo, material);
 
-      renderer.render(scene, camera);
-      frameId = requestAnimationFrame(animate);
-    };
+				// Position along the ring
+				mesh.position.x = Math.cos(angle) * RING_TEXT_RADIUS;
+				mesh.position.z = Math.sin(angle) * RING_TEXT_RADIUS;
+				mesh.position.y = 0;
 
-    animate();
+				// Face outward
+				mesh.lookAt(0, 0, 0);
+				mesh.rotation.y += Math.PI;
 
-    return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('scroll', onScroll);
-      renderer.dispose();
-    };
+				ring.add(mesh);
+			}
+		}
+	);
+
+	group.scale.set(0.5, 0.5, 0.5);
+	group.position.set(MODEL_POSITION_X, MODEL_POSITION_Y, MODEL_POSITION_Z);
+	group.rotation.set(MODEL_INITIAL_TILT_X, MODEL_INITIAL_TILT_Y, MODEL_INITIAL_TILT_Z);
+
+
+
+	const onResize = () => {
+	  updateCameraAndRendererSize(camera, renderer);
+	};
+
+	const onScroll = () => {
+	  targetCameraY = getScrollTargetY();
+	};
+
+	window.addEventListener('resize', onResize);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	let frameId = 0;
+	const animate = () => {
+		camera.position.y = THREE.MathUtils.lerp(
+		camera.position.y,
+		targetCameraY,
+		SCROLL_SMOOTHING
+	  );
+
+	  if (globe && ring) {
+		globe.rotateY(MODEL_SPIN_SPEED_Y);
+		ring.rotateY(RING_SPIN_SPEED_Y); // rotate the band in opposite direction and faster
+	  }
+	  
+
+	  renderer.render(scene, camera);
+	  frameId = requestAnimationFrame(animate);
+	};
+
+	animate();
+
+	return () => {
+	  cancelAnimationFrame(frameId);
+	  window.removeEventListener('resize', onResize);
+	  window.removeEventListener('scroll', onScroll);
+	  renderer.dispose();
+	};
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      id={CANVAS_ID}
-      className={CANVAS_CLASS_NAME}
-    />
+	<canvas
+	  ref={canvasRef}
+	  id={CANVAS_ID}
+	  className={CANVAS_CLASS_NAME}
+	/>
   );
 }
 
