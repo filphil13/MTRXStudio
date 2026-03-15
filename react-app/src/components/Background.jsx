@@ -30,8 +30,8 @@ const MODEL_SEGMENTS = 32;
 const MODEL_COLOR = 0xffffff;
 const RING_TEXT_COLOR = 0xffffff;
 
-const MODEL_SPIN_SPEED_Y = 0.0075;
-const RING_SPIN_SPEED_Y = -0.012;
+const MODEL_SPIN_SPEED_Y = 0.0035;
+const RING_SPIN_SPEED_Y = -0.005;
 
 const RING_TEXT_LABEL = "MTRX";
 const RING_TEXT_RADIUS = 4.5;
@@ -44,8 +44,24 @@ const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
 const STAR_COUNT = 500;
 const STAR_SIZE = 0.1;
 const STAR_COLOR = 0xffffff;
-const STAR_SPREAD_RADIUS = 100;
+const STAR_SPREAD_RADIUS = 300;
 const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
+
+//Side Wall Variables
+const WALL1_POSITION_X = 5;
+const WALL1_POSITION_Y = 0;
+const WALL1_POSITION_Z = 5;
+const WALL1_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
+
+const WALL2_POSITION_X = -5;
+const WALL2_POSITION_Y = 0;
+const WALL2_POSITION_Z = 5;
+const WALL2_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
+
+const WALL_SIZE_X = 10;
+const WALL_SIZE_Y = 10;
+const WALL_SEGMENTS = 40;
+const WALL_COLOR = 0x222222;
 
 // Scroll variables
 const SCROLL_DISTANCE_FACTOR = 0.05;
@@ -141,50 +157,51 @@ function Background() {
 		////////////////
 
 		const loader = new FontLoader();
-		loader.load(
-			RING_TEXT_FONT_URL,
-			(font) => {
-				const material = new THREE.MeshBasicMaterial({
-					color: RING_TEXT_COLOR,
+		loader.load(RING_TEXT_FONT_URL, (font) => {
+			const material = new THREE.MeshBasicMaterial({
+				color: RING_TEXT_COLOR,
+			});
+			const gap = (2 * Math.PI) / RING_TEXT_COUNT;
+
+			for (let i = 0; i < RING_TEXT_COUNT; i += 1) {
+				const angle = i * gap;
+
+				const geo = new TextGeometry(RING_TEXT_LABEL, {
+					font,
+					size: RING_TEXT_SIZE,
+					// In current three versions, TextGeometry uses `depth` (not `height`).
+					depth: RING_TEXT_DEPTH,
 				});
-				const gap = (2 * Math.PI) / RING_TEXT_COUNT;
+				geo.center();
 
-				for (let i = 0; i < RING_TEXT_COUNT; i += 1) {
-					const angle = i * gap;
+				const mesh = new THREE.Mesh(geo, material);
 
-					const geo = new TextGeometry(RING_TEXT_LABEL, {
-						font,
-						size: RING_TEXT_SIZE,
-						// In current three versions, TextGeometry uses `depth` (not `height`).
-						depth: RING_TEXT_DEPTH,
-					});
-					geo.center();
+				// Position along the ring
+				mesh.position.x = Math.cos(angle) * RING_TEXT_RADIUS;
+				mesh.position.z = Math.sin(angle) * RING_TEXT_RADIUS;
+				mesh.position.y = 0;
 
-					const mesh = new THREE.Mesh(geo, material);
+				// Face outward
+				mesh.lookAt(0, 0, 0);
+				mesh.rotation.y += Math.PI;
 
-					// Position along the ring
-					mesh.position.x = Math.cos(angle) * RING_TEXT_RADIUS;
-					mesh.position.z = Math.sin(angle) * RING_TEXT_RADIUS;
-					mesh.position.y = 0;
-
-					// Face outward
-					mesh.lookAt(0, 0, 0);
-					mesh.rotation.y += Math.PI;
-
-					ring.add(mesh);
-				}
-			},
-		);
+				ring.add(mesh);
+			}
+		});
 
 		////////////////
 		// Stars
 		////////////////
 		const addStar = () => {
-			const geometry = new THREE.SphereGeometry(STAR_SIZE, STAR_SEGMENTS , STAR_SEGMENTS/2);
+			const geometry = new THREE.SphereGeometry(
+				STAR_SIZE,
+				STAR_SEGMENTS,
+				STAR_SEGMENTS / 2,
+			);
 			const material = new THREE.MeshBasicMaterial({
 				color: STAR_COLOR,
 				blending: THREE.AdditiveBlending, // Makes the star appear to glow
-                wireframe: true, // Adds a wireframe for a more stylized look
+				wireframe: true, // Adds a wireframe for a more stylized look
 			});
 			const star = new THREE.Mesh(geometry, material);
 
@@ -194,6 +211,21 @@ function Background() {
 			star.position.set(x, y, z);
 			scene.add(star);
 		};
+
+		////////////////
+		// Side Walls
+		////////////////
+		const geometry = new THREE.PlaneGeometry(WALL_SIZE_X, WALL_SIZE_Y, WALL_SEGMENTS, WALL_SEGMENTS);
+		const material = new THREE.MeshBasicMaterial({
+			wireframe: true,
+			side: THREE.DoubleSide,
+            color: WALL_COLOR,
+		});
+		const wall1 = new THREE.Mesh(geometry, material);
+		scene.add(wall1);
+
+		const wall2 = new THREE.Mesh(geometry, material);
+		scene.add(wall2);
 
 		group.scale.set(0.5, 0.5, 0.5);
 		group.position.set(
@@ -208,6 +240,20 @@ function Background() {
 		);
 
 		Array(STAR_COUNT).fill().forEach(addStar);
+
+		wall1.position.set(
+			WALL1_POSITION_X,
+			WALL1_POSITION_Y,
+			WALL1_POSITION_Z,
+		);
+		wall1.rotation.y = WALL1_ROTATION_Y;
+
+		wall2.position.set(
+			WALL2_POSITION_X,
+			WALL2_POSITION_Y,
+			WALL2_POSITION_Z,
+		);
+		wall2.rotation.y = WALL2_ROTATION_Y;
 
 		const onResize = () => {
 			updateCameraAndRendererSize(camera, renderer);
