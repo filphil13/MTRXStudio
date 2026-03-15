@@ -9,7 +9,7 @@ const CAMERA_NEAR = 0.1;
 const CAMERA_FAR = 1000;
 const CAMERA_START_X = 0;
 const CAMERA_START_Y = -0.5;
-const CAMERA_START_Z = 10;
+const CAMERA_START_Z = 1;
 const CAMERA_LOOK_AT_X = 0;
 const CAMERA_LOOK_AT_Y = CAMERA_START_Y;
 const CAMERA_LOOK_AT_Z = 0;
@@ -136,7 +136,11 @@ function applyLeftToRightGradient(geometry) {
 
 	for (let i = 0; i < positions.count; i += 1) {
 		const x = positions.getX(i);
-		const t = THREE.MathUtils.inverseLerp(-WALL_SIZE_X / 2, WALL_SIZE_X / 2, x);
+		const t = THREE.MathUtils.inverseLerp(
+			-WALL_SIZE_X / 2,
+			WALL_SIZE_X / 2,
+			x,
+		);
 		mixedColor.lerpColors(leftColor, rightColor, t);
 
 		const colorIndex = i * 3;
