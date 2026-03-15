@@ -39,6 +39,7 @@ const RING_TEXT_COUNT = 12;
 const RING_TEXT_SIZE = 0.5;
 const RING_TEXT_DEPTH = 0.01;
 const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
+const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
 
 //Star Variables
 const STAR_COUNT = 500;
@@ -49,22 +50,31 @@ const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
 
 //Side Wall Variables
 const WALL1_POSITION_X = 5;
-const WALL1_POSITION_Y = 0;
+const WALL1_POSITION_Y = -80;
 const WALL1_POSITION_Z = 5;
 const WALL1_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
 const WALL2_POSITION_X = -5;
-const WALL2_POSITION_Y = 0;
+const WALL2_POSITION_Y = -80;
 const WALL2_POSITION_Z = 5;
 const WALL2_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
-const WALL_SIZE_X = 10;
-const WALL_SIZE_Y = 10;
-const WALL_SEGMENTS = 40;
-const WALL_COLOR = 0x222222;
+const WALL_SIZE_X = 3;
+const WALL_SIZE_Y = 200;
+const WALL_SEGMENTS = 200;
+const WALL_COLOR = 0xffffff;
+const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
+const WALL_GRADIENT_RIGHT_COLOR = "#000000";
+
+// Random Spike Variables
+const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
+const SPIKE_CHANGE_PROBABILITY = 0.008; // Chance a vertex picks a new target per update
+const SPIKE_ACTIVE_PROBABILITY = 0.2; // Chance the new target is an active spike
+const SPIKE_UPDATE_INTERVAL = 0.00001; // Seconds between random target updates
+const SPIKE_DAMPING = 7; // Lower is smoother, higher is snappier
 
 // Scroll variables
-const SCROLL_DISTANCE_FACTOR = 0.05;
+const SCROLL_DISTANCE_FACTOR = 0.015;
 const SCROLL_SMOOTHING = 0.08;
 
 // Canvas variables
@@ -117,6 +127,27 @@ function getScrollTargetY() {
 	return CAMERA_START_Y - window.scrollY * SCROLL_DISTANCE_FACTOR;
 }
 
+function applyLeftToRightGradient(geometry) {
+	const positions = geometry.attributes.position;
+	const colors = new Float32Array(positions.count * 3);
+	const leftColor = new THREE.Color(WALL_GRADIENT_LEFT_COLOR);
+	const rightColor = new THREE.Color(WALL_GRADIENT_RIGHT_COLOR);
+	const mixedColor = new THREE.Color();
+
+	for (let i = 0; i < positions.count; i += 1) {
+		const x = positions.getX(i);
+		const t = THREE.MathUtils.inverseLerp(-WALL_SIZE_X / 2, WALL_SIZE_X / 2, x);
+		mixedColor.lerpColors(leftColor, rightColor, t);
+
+		const colorIndex = i * 3;
+		colors[colorIndex] = mixedColor.r;
+		colors[colorIndex + 1] = mixedColor.g;
+		colors[colorIndex + 2] = mixedColor.b;
+	}
+
+	geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+}
+
 function Background() {
 	const canvasRef = useRef(null);
 
@@ -149,7 +180,7 @@ function Background() {
 		////////////////
 
 		const ring = new THREE.Group();
-		ring.rotation.x = 0.3; // tilt of the ring
+		ring.rotation.x = RING_TILT; // tilt of the ring
 		group.add(ring);
 
 		////////////////
@@ -215,17 +246,31 @@ function Background() {
 		////////////////
 		// Side Walls
 		////////////////
-		const geometry = new THREE.PlaneGeometry(WALL_SIZE_X, WALL_SIZE_Y, WALL_SEGMENTS, WALL_SEGMENTS);
+		const wall1Geometry = new THREE.PlaneGeometry(
+			WALL_SIZE_X,
+			WALL_SIZE_Y,
+			WALL_SEGMENTS / 30,
+			WALL_SEGMENTS,
+		);
+		const wall2Geometry = wall1Geometry.clone();
+		applyLeftToRightGradient(wall1Geometry);
+		applyLeftToRightGradient(wall2Geometry);
 		const material = new THREE.MeshBasicMaterial({
 			wireframe: true,
 			side: THREE.DoubleSide,
-            color: WALL_COLOR,
+			color: WALL_COLOR,
+			vertexColors: true,
 		});
-		const wall1 = new THREE.Mesh(geometry, material);
+		const wall1 = new THREE.Mesh(wall1Geometry, material);
 		scene.add(wall1);
-
-		const wall2 = new THREE.Mesh(geometry, material);
+		const wall2 = new THREE.Mesh(wall2Geometry, material);
 		scene.add(wall2);
+		const wallSpikeTargets = [
+			new Float32Array(wall1.geometry.attributes.position.count),
+			new Float32Array(wall2.geometry.attributes.position.count),
+		];
+		let lastSpikeUpdate = 0;
+		let lastFrameTime = performance.now() * 0.001;
 
 		group.scale.set(0.5, 0.5, 0.5);
 		group.position.set(
@@ -267,6 +312,9 @@ function Background() {
 		window.addEventListener("scroll", onScroll, { passive: true });
 		onScroll();
 
+		////////////////
+		// ANIMATION
+		////////////////
 		let frameId = 0;
 		const animate = () => {
 			camera.position.y = THREE.MathUtils.lerp(
@@ -279,6 +327,56 @@ function Background() {
 				globe.rotateY(MODEL_SPIN_SPEED_Y);
 				ring.rotateY(RING_SPIN_SPEED_Y); // rotate the band in opposite direction and faster
 			}
+
+			// Random spike displacement along local Z (maps to world X after the 90deg Y rotation)
+			const now = performance.now() * 0.001;
+			const deltaTime = Math.min(0.05, now - lastFrameTime);
+			lastFrameTime = now;
+			const t = now;
+			if (t - lastSpikeUpdate >= SPIKE_UPDATE_INTERVAL) {
+				wallSpikeTargets.forEach((targets) => {
+					for (let i = 0; i < targets.length; i += 1) {
+						if (Math.random() < SPIKE_CHANGE_PROBABILITY) {
+							if (Math.random() < SPIKE_ACTIVE_PROBABILITY) {
+								const direction = Math.random() < 0.5 ? -1 : 1;
+								const nextTarget =
+									direction *
+									(0.15 + Math.random() * SPIKE_MAX_OFFSET);
+								targets[i] = THREE.MathUtils.lerp(
+									targets[i],
+									nextTarget,
+									0.35,
+								);
+							} else {
+								targets[i] = THREE.MathUtils.lerp(
+									targets[i],
+									0,
+									0.6,
+								);
+							}
+						}
+					}
+				});
+				lastSpikeUpdate = t;
+			}
+
+			[wall1, wall2].forEach((wall, wallIndex) => {
+				const pos = wall.geometry.attributes.position;
+				const positions = pos.array;
+				const targets = wallSpikeTargets[wallIndex];
+
+				for (let i = 0; i < pos.count; i += 1) {
+					const zIndex = i * 3 + 2;
+					positions[zIndex] = THREE.MathUtils.damp(
+						positions[zIndex],
+						targets[i],
+						SPIKE_DAMPING,
+						deltaTime,
+					);
+				}
+
+				pos.needsUpdate = true;
+			});
 
 			renderer.render(scene, camera);
 			frameId = requestAnimationFrame(animate);
