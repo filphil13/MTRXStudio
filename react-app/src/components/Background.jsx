@@ -49,18 +49,18 @@ const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
 
 //Side Wall Variables
 const WALL1_POSITION_X = 5;
-const WALL1_POSITION_Y = 0;
-const WALL1_POSITION_Z = 5;
+const WALL1_POSITION_Y = -80;
+const WALL1_POSITION_Z = 10;
 const WALL1_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
 const WALL2_POSITION_X = -5;
-const WALL2_POSITION_Y = 0;
-const WALL2_POSITION_Z = 5;
+const WALL2_POSITION_Y = -80;
+const WALL2_POSITION_Z = 10;
 const WALL2_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
-const WALL_SIZE_X = 10;
-const WALL_SIZE_Y = 10;
-const WALL_SEGMENTS = 40;
+const WALL_SIZE_X = 12;
+const WALL_SIZE_Y = 200;
+const WALL_SEGMENTS = 250;
 const WALL_COLOR = 0x222222;
 
 // Scroll variables
@@ -215,7 +215,7 @@ function Background() {
 		////////////////
 		// Side Walls
 		////////////////
-		const geometry = new THREE.PlaneGeometry(WALL_SIZE_X, WALL_SIZE_Y, WALL_SEGMENTS, WALL_SEGMENTS);
+		const geometry = new THREE.PlaneGeometry(WALL_SIZE_X, WALL_SIZE_Y, WALL_SEGMENTS/10, WALL_SEGMENTS);
 		const material = new THREE.MeshBasicMaterial({
 			wireframe: true,
 			side: THREE.DoubleSide,
