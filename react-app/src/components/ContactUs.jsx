@@ -30,8 +30,8 @@ function ContactUs() {
 		>
 			<div className="grid grid-cols-1 max-lg:grid-cols-2 text-center items-center gap-16 p-6 mx-auto w-full max-w-2xl  min-h-[calc(100vh-7rem)] justify-center">
 				<div>
-					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
-						<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
+						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 							Let's
 						</span>{" "}
 						Talk
@@ -154,7 +154,7 @@ function ContactUs() {
 						name="user_name"
 						placeholder="John Smith"
 						required
-						className="w-full rounded-md py-3 px-4 bg-[#1f2d3a] text-slate-100 text-sm border border-sky-400/40 placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 outline-none"
+						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
 					/>
 					<input
 						type="email"
@@ -162,7 +162,7 @@ function ContactUs() {
 						name="user_email"
 						placeholder="name@flowbite.com"
 						required
-						className="w-full rounded-md py-3 px-4 bg-[#1f2d3a] text-slate-100 text-sm border border-sky-400/40 placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 outline-none"
+						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
 					/>
 					<input
 						type="tel"
@@ -170,19 +170,29 @@ function ContactUs() {
 						name="user_tel"
 						placeholder="(555) 123-4567"
 						required
-						className="w-full rounded-md py-3 px-4 bg-[#1f2d3a] text-slate-100 text-sm border border-sky-400/40 placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 outline-none"
+						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
 					/>
 					<textarea
 						id="message"
 						name="message"
 						placeholder="Write your message here..."
 						rows="6"
-						className="w-full rounded-md px-4 bg-[#1f2d3a] text-slate-100 text-sm pt-3 border border-sky-400/40 placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 outline-none"
+						className="w-full rounded-md px-4 bg-cyber-surface text-cyber-text text-sm pt-3 border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
 					></textarea>
 					<button
 						type="submit"
 						disabled={disableSubmit}
-						className="text-white bg-emerald-600 hover:bg-emerald-500 tracking-wide rounded-md text-sm font-semibold px-4 py-3 w-full cursor-pointer !mt-2 border border-emerald-300/30 shadow-lg shadow-emerald-900/20"
+						className="
+						text-cyber-text bg-cyber-accent hover:shadow-cyber-glow/50
+						tracking-wide rounded-md font-semibold
+						px-4 py-3 w-full cursor-pointer !mt-2
+						border border-cyber-border shadow-lg shadow-emerald-900/20
+
+						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+						bg-[length:0%_100%] bg-no-repeat
+						hover:bg-[length:100%_100%]
+						transition-[background-size,box-shadow] duration-300 hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000] text-lg
+						"
 					>
 						Send message
 					</button>

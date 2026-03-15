@@ -30,9 +30,10 @@ function Title() {
 						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
 						bg-no-repeat
 						hover:bg-[length:100%_100%]
-						transition-all duration-300
-						shadow-lg hover:shadow-cyber-glow/50
-  "
+						transition-[background-size,box-shadow] duration-300
+						shadow-lg hover:shadow-cyber-glow/50 
+						hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000]
+						text-lg"
 					>
 						Book a Free Discovery Call
 					</a>
@@ -43,8 +44,9 @@ function Title() {
 						hover:bg-cyber-purpleHover
 						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
 						bg-[length:0%_100%] bg-no-repeat hover:bg-[length:100%_100%]
-						transition-all duration-300 shadow-lg hover:shadow-cyber-glow/50
-						hover:text-cyber-text"
+						transition-[background-size,box-shadow] duration-300 shadow-lg hover:shadow-cyber-glow/50
+						hover:text-cyber-text hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000] text-lg
+						"
 					>
 						View Portfolio
 					</a>

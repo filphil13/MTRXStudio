@@ -6,7 +6,7 @@ function Portfolio() {
 		>
 			<div className="max-w-screen-xl mx-auto">
 				<h2 className="mb-4 text-center text-6xl font-extrabold font-kode text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-					<span className="text-transparent  bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+					<span className="text-transparent  bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 						Recent
 					</span>{" "}
 					Work
