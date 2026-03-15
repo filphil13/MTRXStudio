@@ -42,34 +42,83 @@ function ContactUs() {
 						provide help.
 					</p>
 
-					<div className="mt-12">
-						<h2 className="text-slate-100 text-base font-semibold">
-							Email
+					<div className="mt-12 ">
+						<h2 className="text-cyber-text text-base font-semibold">
+							Contact Info
 						</h2>
 						<ul className="mt-4">
 							<li className="flex items-center">
-								<div className="bg-[#334a5d] h-10 w-10 rounded-full flex items-center justify-center shrink-0 border border-sky-400/40">
+								<div>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
-										width="20px"
-										height="20px"
-										fill="#000"
-										viewBox="0 0 479.058 479.058"
+										fill="none"
+										viewBox="0 0 14 14"
+										height="3rem"
+										width="3rem"
 									>
-										<path
-											d="M434.146 59.882H44.912C20.146 59.882 0 80.028 0 104.794v269.47c0 24.766 20.146 44.912 44.912 44.912h389.234c24.766 0 44.912-20.146 44.912-44.912v-269.47c0-24.766-20.146-44.912-44.912-44.912zm0 29.941c2.034 0 3.969.422 5.738 1.159L239.529 264.631 39.173 90.982a14.902 14.902 0 0 1 5.738-1.159zm0 299.411H44.912c-8.26 0-14.971-6.71-14.971-14.971V122.615l199.778 173.141c2.822 2.441 6.316 3.655 9.81 3.655s6.988-1.213 9.81-3.655l199.778-173.141v251.649c-.001 8.26-6.711 14.97-14.971 14.97z"
-											data-original="#000000"
-										/>
+										<defs>
+											<linearGradient
+												id="cyberStroke"
+												x1="0%"
+												y1="0%"
+												x2="100%"
+												y2="100%"
+											>
+												<stop
+													offset="0%"
+													stopColor="#A855F7"
+												/>{" "}
+												{/* cyber-purple */}
+												<stop
+													offset="50%"
+													stopColor="#FF2EDB"
+												/>{" "}
+												{/* cyber-accent */}
+												<stop
+													offset="100%"
+													stopColor="#FF6BFF"
+												/>{" "}
+												{/* cyber-glow */}
+											</linearGradient>
+										</defs>
+
+										<g>
+											<path
+												stroke="url(#cyberStroke)"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="m0.5 4 5.93079 4.10593c0.34245 0.23708 0.79598 0.23708 1.13842 0L13.5 4"
+												strokeWidth="1"
+											/>
+
+											<path
+												stroke="url(#cyberStroke)"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M0.5 11.5v-9c0 -0.55228 0.447715 -1 1 -1h11c0.5523 0 1 0.44771 1 1v9c0 0.5523 -0.4477 1 -1 1h-11c-0.552285 0 -1 -0.4477 -1 -1Z"
+												strokeWidth="1"
+											/>
+										</g>
 									</svg>
 								</div>
 								<a
 									href="mailto:info@example.com"
 									className="text-sm ml-4"
 								>
-									<small className="block text-slate-300">
+									{/* <small className="block text-slate-300">
 										Mail
-									</small>
-									<span className="font-semibold text-sky-300">
+									</small> */}
+									<span
+										className="
+									font-semibold text-cyber-text cursor-pointer
+									bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+									bg-clip-text
+									bg-[length:0%_100%] bg-no-repeat
+									hover:bg-[length:100%_100%]
+									hover:text-transparent
+									transition-[background-size,color] duration-300 text-xl
+	"
+									>
 										info@example.com
 									</span>
 								</a>
@@ -77,8 +126,8 @@ function ContactUs() {
 						</ul>
 					</div>
 
-					<div className="mt-12">
-						<h2 className="text-slate-100 text-base font-semibold">
+					{/* <div className="mt-12">
+						<h2 className="text-cyber-text text-base font-semibold">
 							Socials
 						</h2>
 						<ul className="flex mt-4 space-x-4">
@@ -140,7 +189,7 @@ function ContactUs() {
 								</a>
 							</li>
 						</ul>
-					</div>
+					</div> */}
 				</div>
 
 				<form
