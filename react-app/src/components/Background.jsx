@@ -51,18 +51,20 @@ const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
 //Side Wall Variables
 const WALL1_POSITION_X = 5;
 const WALL1_POSITION_Y = -80;
-const WALL1_POSITION_Z = 10;
+const WALL1_POSITION_Z = 5;
 const WALL1_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
 const WALL2_POSITION_X = -5;
 const WALL2_POSITION_Y = -80;
-const WALL2_POSITION_Z = 10;
+const WALL2_POSITION_Z = 5;
 const WALL2_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
-const WALL_SIZE_X = 12;
+const WALL_SIZE_X = 3;
 const WALL_SIZE_Y = 200;
-const WALL_SEGMENTS = 300;
+const WALL_SEGMENTS = 200;
 const WALL_COLOR = 0xffffff;
+const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
+const WALL_GRADIENT_RIGHT_COLOR = "#000000";
 
 // Random Spike Variables
 const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
@@ -123,6 +125,27 @@ function updateCameraAndRendererSize(camera, renderer) {
 
 function getScrollTargetY() {
 	return CAMERA_START_Y - window.scrollY * SCROLL_DISTANCE_FACTOR;
+}
+
+function applyLeftToRightGradient(geometry) {
+	const positions = geometry.attributes.position;
+	const colors = new Float32Array(positions.count * 3);
+	const leftColor = new THREE.Color(WALL_GRADIENT_LEFT_COLOR);
+	const rightColor = new THREE.Color(WALL_GRADIENT_RIGHT_COLOR);
+	const mixedColor = new THREE.Color();
+
+	for (let i = 0; i < positions.count; i += 1) {
+		const x = positions.getX(i);
+		const t = THREE.MathUtils.inverseLerp(-WALL_SIZE_X / 2, WALL_SIZE_X / 2, x);
+		mixedColor.lerpColors(leftColor, rightColor, t);
+
+		const colorIndex = i * 3;
+		colors[colorIndex] = mixedColor.r;
+		colors[colorIndex + 1] = mixedColor.g;
+		colors[colorIndex + 2] = mixedColor.b;
+	}
+
+	geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
 }
 
 function Background() {
@@ -223,21 +246,24 @@ function Background() {
 		////////////////
 		// Side Walls
 		////////////////
-		const geometry = new THREE.PlaneGeometry(
+		const wall1Geometry = new THREE.PlaneGeometry(
 			WALL_SIZE_X,
 			WALL_SIZE_Y,
-			WALL_SEGMENTS / 10,
+			WALL_SEGMENTS / 30,
 			WALL_SEGMENTS,
 		);
+		const wall2Geometry = wall1Geometry.clone();
+		applyLeftToRightGradient(wall1Geometry);
+		applyLeftToRightGradient(wall2Geometry);
 		const material = new THREE.MeshBasicMaterial({
 			wireframe: true,
 			side: THREE.DoubleSide,
 			color: WALL_COLOR,
+			vertexColors: true,
 		});
-		const wall1 = new THREE.Mesh(geometry, material);
+		const wall1 = new THREE.Mesh(wall1Geometry, material);
 		scene.add(wall1);
-		// Clone so each wall has its own position buffer for independent animation
-		const wall2 = new THREE.Mesh(geometry.clone(), material);
+		const wall2 = new THREE.Mesh(wall2Geometry, material);
 		scene.add(wall2);
 		const wallSpikeTargets = [
 			new Float32Array(wall1.geometry.attributes.position.count),
