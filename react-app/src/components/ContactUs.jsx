@@ -43,9 +43,9 @@ function ContactUs() {
 					</p>
 
 					<div className="mt-12 ">
-						<h2 className="text-cyber-text text-base font-semibold">
+						{/* <h2 className="text-cyber-text text-base font-semibold">
 							Contact Info
-						</h2>
+						</h2> */}
 						<ul className="mt-4">
 							<li className="flex items-center">
 								<div>
