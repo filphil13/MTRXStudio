@@ -39,6 +39,7 @@ const RING_TEXT_COUNT = 12;
 const RING_TEXT_SIZE = 0.5;
 const RING_TEXT_DEPTH = 0.01;
 const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
+const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
 
 //Star Variables
 const STAR_COUNT = 500;
@@ -71,7 +72,7 @@ const SPIKE_UPDATE_INTERVAL = 0.00001; // Seconds between random target updates
 const SPIKE_DAMPING = 7; // Lower is smoother, higher is snappier
 
 // Scroll variables
-const SCROLL_DISTANCE_FACTOR = 0.05;
+const SCROLL_DISTANCE_FACTOR = 0.015;
 const SCROLL_SMOOTHING = 0.08;
 
 // Canvas variables
@@ -156,7 +157,7 @@ function Background() {
 		////////////////
 
 		const ring = new THREE.Group();
-		ring.rotation.x = 0.3; // tilt of the ring
+		ring.rotation.x = RING_TILT; // tilt of the ring
 		group.add(ring);
 
 		////////////////
@@ -285,6 +286,9 @@ function Background() {
 		window.addEventListener("scroll", onScroll, { passive: true });
 		onScroll();
 
+		////////////////
+		// ANIMATION
+		////////////////
 		let frameId = 0;
 		const animate = () => {
 			camera.position.y = THREE.MathUtils.lerp(
@@ -318,7 +322,11 @@ function Background() {
 									0.35,
 								);
 							} else {
-								targets[i] = THREE.MathUtils.lerp(targets[i], 0, 0.6);
+								targets[i] = THREE.MathUtils.lerp(
+									targets[i],
+									0,
+									0.6,
+								);
 							}
 						}
 					}
