@@ -60,8 +60,15 @@ const WALL2_ROTATION_Y = 3.14 / 2; // Rotate 90 degrees to face inward
 
 const WALL_SIZE_X = 12;
 const WALL_SIZE_Y = 200;
-const WALL_SEGMENTS = 250;
-const WALL_COLOR = 0x222222;
+const WALL_SEGMENTS = 300;
+const WALL_COLOR = 0xffffff;
+
+// Random Spike Variables
+const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
+const SPIKE_CHANGE_PROBABILITY = 0.008; // Chance a vertex picks a new target per update
+const SPIKE_ACTIVE_PROBABILITY = 0.2; // Chance the new target is an active spike
+const SPIKE_UPDATE_INTERVAL = 0.00001; // Seconds between random target updates
+const SPIKE_DAMPING = 7; // Lower is smoother, higher is snappier
 
 // Scroll variables
 const SCROLL_DISTANCE_FACTOR = 0.05;
@@ -215,17 +222,28 @@ function Background() {
 		////////////////
 		// Side Walls
 		////////////////
-		const geometry = new THREE.PlaneGeometry(WALL_SIZE_X, WALL_SIZE_Y, WALL_SEGMENTS/10, WALL_SEGMENTS);
+		const geometry = new THREE.PlaneGeometry(
+			WALL_SIZE_X,
+			WALL_SIZE_Y,
+			WALL_SEGMENTS / 10,
+			WALL_SEGMENTS,
+		);
 		const material = new THREE.MeshBasicMaterial({
 			wireframe: true,
 			side: THREE.DoubleSide,
-            color: WALL_COLOR,
+			color: WALL_COLOR,
 		});
 		const wall1 = new THREE.Mesh(geometry, material);
 		scene.add(wall1);
-
-		const wall2 = new THREE.Mesh(geometry, material);
+		// Clone so each wall has its own position buffer for independent animation
+		const wall2 = new THREE.Mesh(geometry.clone(), material);
 		scene.add(wall2);
+		const wallSpikeTargets = [
+			new Float32Array(wall1.geometry.attributes.position.count),
+			new Float32Array(wall2.geometry.attributes.position.count),
+		];
+		let lastSpikeUpdate = 0;
+		let lastFrameTime = performance.now() * 0.001;
 
 		group.scale.set(0.5, 0.5, 0.5);
 		group.position.set(
@@ -279,6 +297,52 @@ function Background() {
 				globe.rotateY(MODEL_SPIN_SPEED_Y);
 				ring.rotateY(RING_SPIN_SPEED_Y); // rotate the band in opposite direction and faster
 			}
+
+			// Random spike displacement along local Z (maps to world X after the 90deg Y rotation)
+			const now = performance.now() * 0.001;
+			const deltaTime = Math.min(0.05, now - lastFrameTime);
+			lastFrameTime = now;
+			const t = now;
+			if (t - lastSpikeUpdate >= SPIKE_UPDATE_INTERVAL) {
+				wallSpikeTargets.forEach((targets) => {
+					for (let i = 0; i < targets.length; i += 1) {
+						if (Math.random() < SPIKE_CHANGE_PROBABILITY) {
+							if (Math.random() < SPIKE_ACTIVE_PROBABILITY) {
+								const direction = Math.random() < 0.5 ? -1 : 1;
+								const nextTarget =
+									direction *
+									(0.15 + Math.random() * SPIKE_MAX_OFFSET);
+								targets[i] = THREE.MathUtils.lerp(
+									targets[i],
+									nextTarget,
+									0.35,
+								);
+							} else {
+								targets[i] = THREE.MathUtils.lerp(targets[i], 0, 0.6);
+							}
+						}
+					}
+				});
+				lastSpikeUpdate = t;
+			}
+
+			[wall1, wall2].forEach((wall, wallIndex) => {
+				const pos = wall.geometry.attributes.position;
+				const positions = pos.array;
+				const targets = wallSpikeTargets[wallIndex];
+
+				for (let i = 0; i < pos.count; i += 1) {
+					const zIndex = i * 3 + 2;
+					positions[zIndex] = THREE.MathUtils.damp(
+						positions[zIndex],
+						targets[i],
+						SPIKE_DAMPING,
+						deltaTime,
+					);
+				}
+
+				pos.needsUpdate = true;
+			});
 
 			renderer.render(scene, camera);
 			frameId = requestAnimationFrame(animate);
