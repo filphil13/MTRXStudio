@@ -4,6 +4,7 @@ import Introduction from "./components/Introduction";
 import Portfolio from "./components/Portfolio";
 import ContactUs from "./components/ContactUs";
 import Background from "./components/Background";
+import Footer from "./components/Footer";
 
 function App() {
 	//sometimes i touch my pp at night
@@ -14,6 +15,7 @@ function App() {
 			<Introduction />
 			<Portfolio />
 			<ContactUs />
+			<Footer />
 		</>
 	);
 }
