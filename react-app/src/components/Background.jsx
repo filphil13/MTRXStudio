@@ -25,6 +25,7 @@ const MODEL_POSITION_Z = 0.0;
 const MODEL_INITIAL_TILT_X = 0.0;
 const MODEL_INITIAL_TILT_Y = 0.0;
 const MODEL_INITIAL_TILT_Z = 0.0;
+const MODEL_SEGMENTS = 32;
 
 const MODEL_COLOR = 0xffffff;
 const RING_TEXT_COLOR = 0xffffff;
@@ -37,12 +38,14 @@ const RING_TEXT_RADIUS = 4.5;
 const RING_TEXT_COUNT = 12;
 const RING_TEXT_SIZE = 0.5;
 const RING_TEXT_DEPTH = 0.01;
+const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
 
 //Star Variables
 const STAR_COUNT = 500;
 const STAR_SIZE = 0.1;
 const STAR_COLOR = 0xffffff;
 const STAR_SPREAD_RADIUS = 100;
+const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
 
 // Scroll variables
 const SCROLL_DISTANCE_FACTOR = 0.05;
@@ -117,7 +120,7 @@ function Background() {
 		////////////////
 
 		const globe = new THREE.Mesh(
-			new THREE.SphereGeometry(3, 32, 32),
+			new THREE.SphereGeometry(3, MODEL_SEGMENTS, MODEL_SEGMENTS / 2),
 			new THREE.MeshBasicMaterial({
 				wireframe: true,
 				color: MODEL_COLOR,
@@ -139,7 +142,7 @@ function Background() {
 
 		const loader = new FontLoader();
 		loader.load(
-			"https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+			RING_TEXT_FONT_URL,
 			(font) => {
 				const material = new THREE.MeshBasicMaterial({
 					color: RING_TEXT_COLOR,
@@ -177,10 +180,11 @@ function Background() {
 		// Stars
 		////////////////
 		const addStar = () => {
-			const geometry = new THREE.SphereGeometry(STAR_SIZE, 24, 24);
+			const geometry = new THREE.SphereGeometry(STAR_SIZE, STAR_SEGMENTS , STAR_SEGMENTS/2);
 			const material = new THREE.MeshBasicMaterial({
 				color: STAR_COLOR,
 				blending: THREE.AdditiveBlending, // Makes the star appear to glow
+                wireframe: true, // Adds a wireframe for a more stylized look
 			});
 			const star = new THREE.Mesh(geometry, material);
 
