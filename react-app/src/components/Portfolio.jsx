@@ -1,3 +1,4 @@
+import PortfolioCard3D from "./PorfolioCard3D";
 function Portfolio() {
 	return (
 		<section
@@ -12,46 +13,30 @@ function Portfolio() {
 					Work
 				</h2>
 
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-					<article className="rounded-lg border border-gray-700 bg-[#283845] p-6">
-						<h3 className="text-xl font-semibold text-white mb-2">
-							Local Service Business
-						</h3>
-						<p className="text-sm text-gray-300 mb-4">
-							Redesigned a dated website into a modern,
-							mobile-first lead generation site.
-						</p>
-						<p className="text-sm font-medium text-emerald-400">
-							Result: More quote requests in the first month.
-						</p>
-					</article>
+				<div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+					<PortfolioCard3D
+						title="Local Service Business"
+						description="Redesigned a dated website into a modern, mobile-first lead generation site."
+						result="Result: More quote requests in the first month."
+						coverLabel="SERVICE SITE"
+						foregroundLabel="PHONE MOCKUP"
+					/>
 
-					<article className="rounded-lg border border-gray-700 bg-[#283845] p-6">
-						<h3 className="text-xl font-semibold text-white mb-2">
-							E-commerce Launch
-						</h3>
-						<p className="text-sm text-gray-300 mb-4">
-							Built a streamlined storefront with clear product
-							pages and checkout flow.
-						</p>
-						<p className="text-sm font-medium text-emerald-400">
-							Result: Improved conversion rate after launch.
-						</p>
-					</article>
+					<PortfolioCard3D
+						title="E-commerce Launch"
+						description="Built a streamlined storefront with clear product pages and checkout flow."
+						result="Result: Improved conversion rate after launch."
+						coverLabel="STOREFRONT"
+						foregroundLabel="PRODUCT CARD"
+					/>
 
-					<article className="rounded-lg border border-gray-700 bg-[#283845] p-6">
-						<h3 className="text-xl font-semibold text-white mb-2">
-							Startup Landing Page
-						</h3>
-						<p className="text-sm text-gray-300 mb-4">
-							Created a conversion-focused landing page with
-							strong messaging and CTAs.
-						</p>
-						<p className="text-sm font-medium text-emerald-400">
-							Result: Higher demo booking volume from paid
-							traffic.
-						</p>
-					</article>
+					<PortfolioCard3D
+						title="Startup Landing Page"
+						description="Created a conversion-focused landing page with strong messaging and CTAs."
+						result="Result: Higher demo booking volume from paid traffic."
+						coverLabel="LANDING PAGE"
+						foregroundLabel="3D PANEL"
+					/>
 				</div>
 			</div>
 		</section>
