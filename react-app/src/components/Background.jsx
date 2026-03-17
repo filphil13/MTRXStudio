@@ -79,26 +79,95 @@ const SCROLL_SMOOTHING = 0.08;
 
 // Canvas variables
 const CANVAS_ID = "background";
-const CANVAS_CLASS_NAME = "fixed top-0 left-0 w-full h-full";
+const CANVAS_CLASS_NAME = "fixed inset-0 block h-screen w-screen pointer-events-none z-0";
+
+// Responsive breakpoints
+const SMALL_PHONE_BREAKPOINT = 430;
+const MOBILE_BREAKPOINT = 640;
+const TABLET_BREAKPOINT = 1024;
+
+function getResponsiveSceneSettings(width) {
+	if (width <= SMALL_PHONE_BREAKPOINT) {
+		return {
+			cameraFov: 78,
+			cameraY: 0,
+			cameraZ: 12.5,
+			groupScale: 0.44,
+			wallX: 3.7,
+			wallY: -68,
+			pixelRatioCap: 1.3,
+			starCount: 180,
+		};
+	}
+
+	if (width < MOBILE_BREAKPOINT) {
+		return {
+			cameraFov: 74,
+			cameraY: -0.15,
+			cameraZ: 12.7,
+			groupScale: 0.42,
+			wallX: 4,
+			wallY: -72,
+			pixelRatioCap: 1.5,
+			starCount: 240,
+		};
+	}
+
+	if (width < TABLET_BREAKPOINT) {
+		return {
+			cameraFov: 66,
+			cameraY: -0.4,
+			cameraZ: 11.5,
+			groupScale: 0.46,
+			wallX: 4.5,
+			wallY: -76,
+			pixelRatioCap: 1.75,
+			starCount: 360,
+		};
+	}
+
+	return {
+		cameraFov: CAMERA_FOV,
+		cameraY: CAMERA_START_Y,
+		cameraZ: CAMERA_START_Z,
+		groupScale: 0.5,
+		wallX: WALL1_POSITION_X,
+		wallY: WALL1_POSITION_Y,
+		pixelRatioCap: RENDERER_MAX_PIXEL_RATIO,
+		starCount: STAR_COUNT,
+	};
+}
+
+function getRendererPixelRatio(width) {
+	return Math.min(
+		window.devicePixelRatio,
+		getResponsiveSceneSettings(width).pixelRatioCap,
+	);
+}
 
 function getViewportSize() {
+	const viewport = window.visualViewport;
+	const width = Math.floor(viewport?.width ?? window.innerWidth);
+	const height = Math.floor(viewport?.height ?? window.innerHeight);
+
 	return {
-		width: window.innerWidth,
-		height: window.innerHeight,
+		width: Math.max(1, width),
+		height: Math.max(1, height),
 	};
 }
 
 function createCamera() {
 	const { width, height } = getViewportSize();
+	const settings = getResponsiveSceneSettings(width);
 	const camera = new THREE.PerspectiveCamera(
-		CAMERA_FOV,
+		settings.cameraFov,
 		width / height,
 		CAMERA_NEAR,
 		CAMERA_FAR,
 	);
 
-	camera.position.set(CAMERA_START_X, CAMERA_START_Y, CAMERA_START_Z);
-	camera.lookAt(CAMERA_LOOK_AT_X, CAMERA_LOOK_AT_Y, CAMERA_LOOK_AT_Z);
+	camera.position.set(CAMERA_START_X, settings.cameraY, settings.cameraZ);
+	camera.lookAt(CAMERA_LOOK_AT_X, settings.cameraY, CAMERA_LOOK_AT_Z);
 	return camera;
 }
 
@@ -110,21 +179,32 @@ function createRenderer(canvas) {
 	});
 
 	renderer.setSize(width, height);
-	renderer.setPixelRatio(
-		Math.min(window.devicePixelRatio, RENDERER_MAX_PIXEL_RATIO),
-	);
+	renderer.setPixelRatio(getRendererPixelRatio(width));
 	return renderer;
 }
 
 function updateCameraAndRendererSize(camera, renderer) {
 	const { width, height } = getViewportSize();
+	const settings = getResponsiveSceneSettings(width);
+
 	camera.aspect = width / height;
+	camera.fov = settings.cameraFov;
 	camera.updateProjectionMatrix();
 	renderer.setSize(width, height);
+	renderer.setPixelRatio(getRendererPixelRatio(width));
+
+	return settings;
 }
 
-function getScrollTargetY() {
-	return CAMERA_START_Y - window.scrollY * SCROLL_DISTANCE_FACTOR;
+function getScrollTargetY(baseCameraY) {
+	return baseCameraY - window.scrollY * SCROLL_DISTANCE_FACTOR;
+}
+
+function applyResponsiveLayout(camera, group, wall1, wall2, settings) {
+	group.scale.set(settings.groupScale, settings.groupScale, settings.groupScale);
+	wall1.position.set(settings.wallX, settings.wallY, WALL1_POSITION_Z);
+	wall2.position.set(-settings.wallX, settings.wallY, WALL2_POSITION_Z);
+	camera.position.z = settings.cameraZ;
 }
 
 function applyLeftToRightGradient(geometry) {
@@ -152,7 +232,7 @@ function applyLeftToRightGradient(geometry) {
 	geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
 }
 
-function Background() {
+function Background({ id = CANVAS_ID, className = "" }) {
 	const canvasRef = useRef(null);
 
 	useEffect(() => {
@@ -164,6 +244,7 @@ function Background() {
 		const renderer = createRenderer(canvas);
 		const group = new THREE.Group();
 		scene.add(group);
+		let baseCameraY = camera.position.y;
 		let targetCameraY = camera.position.y;
 
 		////////////////
@@ -276,7 +357,11 @@ function Background() {
 		let lastSpikeUpdate = 0;
 		let lastFrameTime = performance.now() * 0.001;
 
-		group.scale.set(0.5, 0.5, 0.5);
+		const initialSettings = getResponsiveSceneSettings(getViewportSize().width);
+		applyResponsiveLayout(camera, group, wall1, wall2, initialSettings);
+		baseCameraY = initialSettings.cameraY;
+		targetCameraY = baseCameraY;
+
 		group.position.set(
 			MODEL_POSITION_X,
 			MODEL_POSITION_Y,
@@ -288,32 +373,28 @@ function Background() {
 			MODEL_INITIAL_TILT_Z,
 		);
 
-		Array(STAR_COUNT).fill().forEach(addStar);
+		Array(initialSettings.starCount).fill().forEach(addStar);
 
-		wall1.position.set(
-			WALL1_POSITION_X,
-			WALL1_POSITION_Y,
-			WALL1_POSITION_Z,
-		);
 		wall1.rotation.y = WALL1_ROTATION_Y;
-
-		wall2.position.set(
-			WALL2_POSITION_X,
-			WALL2_POSITION_Y,
-			WALL2_POSITION_Z,
-		);
 		wall2.rotation.y = WALL2_ROTATION_Y;
 
 		const onResize = () => {
-			updateCameraAndRendererSize(camera, renderer);
+			const settings = updateCameraAndRendererSize(camera, renderer);
+			applyResponsiveLayout(camera, group, wall1, wall2, settings);
+			baseCameraY = settings.cameraY;
+			targetCameraY = getScrollTargetY(baseCameraY);
 		};
 
 		const onScroll = () => {
-			targetCameraY = getScrollTargetY();
+			targetCameraY = getScrollTargetY(baseCameraY);
 		};
 
+		const visualViewport = window.visualViewport;
 		window.addEventListener("resize", onResize);
+		window.addEventListener("orientationchange", onResize);
+		visualViewport?.addEventListener("resize", onResize);
 		window.addEventListener("scroll", onScroll, { passive: true });
+		onResize();
 		onScroll();
 
 		////////////////
@@ -391,13 +472,19 @@ function Background() {
 		return () => {
 			cancelAnimationFrame(frameId);
 			window.removeEventListener("resize", onResize);
+			window.removeEventListener("orientationchange", onResize);
+			visualViewport?.removeEventListener("resize", onResize);
 			window.removeEventListener("scroll", onScroll);
 			renderer.dispose();
 		};
 	}, []);
 
 	return (
-		<canvas ref={canvasRef} id={CANVAS_ID} className={CANVAS_CLASS_NAME} />
+		<canvas
+			ref={canvasRef}
+			id={id}
+			className={`${CANVAS_CLASS_NAME} ${className}`.trim()}
+		/>
 	);
 }
 
