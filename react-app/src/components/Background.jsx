@@ -90,10 +90,10 @@ function getResponsiveSceneSettings(width) {
 	if (width <= SMALL_PHONE_BREAKPOINT) {
 		return {
 			cameraFov: 78,
-			cameraY: 0,
-			cameraZ: 12.5,
+			cameraY: -1,
+			cameraZ: 8,
 			groupScale: 0.44,
-			wallX: 3.7,
+			wallX: 1.5,
 			wallY: -68,
 			pixelRatioCap: 1.3,
 			starCount: 180,
@@ -119,7 +119,7 @@ function getResponsiveSceneSettings(width) {
 			cameraY: -0.4,
 			cameraZ: 11.5,
 			groupScale: 0.46,
-			wallX: 4.5,
+			wallX: 2.5,
 			wallY: -76,
 			pixelRatioCap: 1.75,
 			starCount: 360,
