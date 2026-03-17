@@ -195,53 +195,230 @@ function ContactUs() {
 				<form
 					ref={form}
 					onSubmit={sendEmail}
-					className="w-full max-w-xl mx-auto space-y-4"
+					className="
+						w-full max-w-2xl mx-auto
+						rounded-2xl border border-cyber-border
+						bg-cyber-surface/60 backdrop-blur-xl
+						p-6 md:p-8
+						space-y-5
+						shadow-[0_0_30px_rgba(0,0,0,0.25)]
+						"
 				>
-					<input
-						type="text"
-						id="name"
-						name="user_name"
-						placeholder="John Smith"
-						required
-						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
-					/>
-					<input
-						type="email"
-						id="email"
-						name="user_email"
-						placeholder="name@flowbite.com"
-						required
-						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
-					/>
-					<input
-						type="tel"
-						id="phone"
-						name="user_tel"
-						placeholder="(555) 123-4567"
-						required
-						className="w-full rounded-md py-3 px-4 bg-cyber-surface text-cyber-text text-sm border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
-					/>
-					<textarea
-						id="message"
-						name="message"
-						placeholder="Write your message here..."
-						rows="6"
-						className="w-full rounded-md px-4 bg-cyber-surface text-cyber-text text-sm pt-3 border border-cyber-accent placeholder:text-cyber-muted focus:border-cyber-glow focus:ring-2 focus:ring-emerald-400/20 outline-none"
-					></textarea>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<div className="relative">
+							<input
+								type="text"
+								id="first_name"
+								name="user_first_name"
+								placeholder=" "
+								required
+								className="
+									peer w-full rounded-xl
+									border border-cyber-border
+									bg-cyber-surface/80
+									px-4 pt-6 pb-2
+									text-sm text-cyber-text
+									outline-none
+									transition-all duration-300
+
+									focus:border-cyber-glow
+									focus:shadow-[0_0_0_1px_#FF2EDB,0_0_16px_rgba(255,46,219,0.15)]
+									"
+							/>
+							<label
+								htmlFor="first_name"
+								className="
+									absolute left-4 top-2
+									text-xs text-cyber-muted
+									transition-all duration-300
+
+									peer-placeholder-shown:top-4
+									peer-placeholder-shown:text-sm
+
+									peer-focus:top-2
+									peer-focus:text-xs
+									peer-focus:text-cyber-accent
+									"
+							>
+								First name
+							</label>
+						</div>
+
+						<div className="relative">
+							<input
+								type="text"
+								id="last_name"
+								name="user_last_name"
+								placeholder=" "
+								required
+								className="
+									peer w-full rounded-xl
+									border border-cyber-border
+									bg-cyber-surface/80
+									px-4 pt-6 pb-2
+									text-sm text-cyber-text
+									outline-none
+									transition-all duration-300
+
+									focus:border-cyber-glow
+									focus:shadow-[0_0_0_1px_#FF2EDB,0_0_16px_rgba(255,46,219,0.15)]
+									"
+							/>
+							<label
+								htmlFor="last_name"
+								className="
+									absolute left-4 top-2
+									text-xs text-cyber-muted
+									transition-all duration-300
+
+									peer-placeholder-shown:top-4
+									peer-placeholder-shown:text-sm
+
+									peer-focus:top-2
+									peer-focus:text-xs
+									peer-focus:text-cyber-accent
+									"
+							>
+								Last name
+							</label>
+						</div>
+					</div>
+
+					<div className="relative">
+						<input
+							type="email"
+							id="email"
+							name="user_email"
+							placeholder=" "
+							required
+							className="
+								peer w-full rounded-xl
+								border border-cyber-border
+								bg-cyber-surface/80
+								px-4 pt-6 pb-2
+								text-sm text-cyber-text
+								outline-none
+								transition-all duration-300
+
+								focus:border-cyber-glow
+								focus:shadow-[0_0_0_1px_#FF2EDB,0_0_16px_rgba(255,46,219,0.15)]
+								"
+						/>
+						<label
+							htmlFor="email"
+							className="
+								absolute left-4 top-2
+								text-xs text-cyber-muted
+								transition-all duration-300
+
+								peer-placeholder-shown:top-4
+								peer-placeholder-shown:text-sm
+
+								peer-focus:top-2
+								peer-focus:text-xs
+								peer-focus:text-cyber-accent
+								"
+						>
+							Email address
+						</label>
+					</div>
+
+					<div className="relative">
+						<input
+							type="tel"
+							id="phone"
+							name="user_tel"
+							placeholder=" "
+							required
+							className="
+								peer w-full rounded-xl
+								border border-cyber-border
+								bg-cyber-surface/80
+								px-4 pt-6 pb-2
+								text-sm text-cyber-text
+								outline-none
+								transition-all duration-300
+
+								focus:border-cyber-glow
+								focus:shadow-[0_0_0_1px_#FF2EDB,0_0_16px_rgba(255,46,219,0.15)]
+								"
+						/>
+						<label
+							htmlFor="phone"
+							className="
+								absolute left-4 top-2
+								text-xs text-cyber-muted
+								transition-all duration-300
+
+								peer-placeholder-shown:top-4
+								peer-placeholder-shown:text-sm
+
+								peer-focus:top-2
+								peer-focus:text-xs
+								peer-focus:text-cyber-accent
+								"
+						>
+							Phone number
+						</label>
+					</div>
+
+					<div className="relative">
+						<textarea
+							id="message"
+							name="message"
+							placeholder=" "
+							rows="6"
+							required
+							className="
+								peer w-full rounded-xl
+								border border-cyber-border
+								bg-cyber-surface/80
+								px-4 pt-6 pb-3
+								text-sm text-cyber-text
+								outline-none resize-none
+								transition-all duration-300
+
+								focus:border-cyber-glow
+								focus:shadow-[0_0_0_1px_#FF2EDB,0_0_16px_rgba(255,46,219,0.15)]
+								"
+						/>
+						<label
+							htmlFor="message"
+							className="
+								absolute left-4 top-2
+								text-xs text-cyber-muted
+								transition-all duration-300
+
+								peer-placeholder-shown:top-4
+								peer-placeholder-shown:text-sm
+
+								peer-focus:top-2
+								peer-focus:text-xs
+								peer-focus:text-cyber-accent
+								"
+						>
+							Tell us about your project
+						</label>
+					</div>
+
 					<button
 						type="submit"
 						disabled={disableSubmit}
 						className="
-						text-cyber-text bg-cyber-accent hover:shadow-cyber-glow/50
-						tracking-wide rounded-md font-semibold
-						px-4 py-3 w-full cursor-pointer !mt-2
-						border border-cyber-border shadow-lg shadow-emerald-900/20
+							text-cyber-text bg-cyber-accent hover:shadow-cyber-glow/50
+							tracking-wide rounded-xl font-semibold
+							px-4 py-3 w-full cursor-pointer !mt-2
+							border border-cyber-border shadow-lg shadow-emerald-900/20
 
-						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
-						bg-[length:0%_100%] bg-no-repeat
-						hover:bg-[length:100%_100%]
-						transition-[background-size,box-shadow] duration-300 hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000] text-lg
-						"
+							bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+							bg-[length:0%_100%] bg-no-repeat
+							hover:bg-[length:100%_100%]
+							transition-[background-size,box-shadow,transform] duration-300
+							hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000]
+							hover:scale-[1.01] active:scale-[0.99]
+							text-lg
+							disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
+							"
 					>
 						Send message
 					</button>
