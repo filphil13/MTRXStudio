@@ -17,6 +17,7 @@ const CAMERA_LOOK_AT_Z = 0;
 // Renderer variables
 const RENDERER_ANTIALIAS = true;
 const RENDERER_MAX_PIXEL_RATIO = 2;
+const SCENE_BACKGROUND_COLOR = 0x07010f;
 
 //LOGO MESH VARIABLES
 const MODEL_POSITION_X = 0.0;
@@ -64,7 +65,7 @@ const WALL_SIZE_Y = 200;
 const WALL_SEGMENTS = 200;
 const WALL_COLOR = 0xffffff;
 const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
-const WALL_GRADIENT_RIGHT_COLOR = "#000000";
+const WALL_GRADIENT_RIGHT_COLOR = "#07010f";
 
 // Random Spike Variables
 const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
@@ -252,6 +253,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		if (!canvas) return;
 
 		const scene = new THREE.Scene();
+		scene.background = new THREE.Color(SCENE_BACKGROUND_COLOR);
 		const camera = createCamera();
 		const renderer = createRenderer(canvas);
 		const group = new THREE.Group();
