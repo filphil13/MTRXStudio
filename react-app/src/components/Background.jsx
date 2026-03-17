@@ -17,6 +17,7 @@ const CAMERA_LOOK_AT_Z = 0;
 // Renderer variables
 const RENDERER_ANTIALIAS = true;
 const RENDERER_MAX_PIXEL_RATIO = 2;
+const SCENE_BACKGROUND_COLOR = 0x07010f;
 
 //LOGO MESH VARIABLES
 const MODEL_POSITION_X = 0.0;
@@ -64,7 +65,7 @@ const WALL_SIZE_Y = 200;
 const WALL_SEGMENTS = 200;
 const WALL_COLOR = 0xffffff;
 const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
-const WALL_GRADIENT_RIGHT_COLOR = "#000000";
+const WALL_GRADIENT_RIGHT_COLOR = "#07010f";
 
 // Random Spike Variables
 const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
@@ -79,7 +80,7 @@ const SCROLL_SMOOTHING = 0.08;
 
 // Canvas variables
 const CANVAS_ID = "background";
-const CANVAS_CLASS_NAME = "fixed inset-0 block h-screen w-screen pointer-events-none z-0";
+const CANVAS_CLASS_NAME = "fixed inset-0 block h-dvh w-screen pointer-events-none z-0";
 
 // Responsive breakpoints
 const SMALL_PHONE_BREAKPOINT = 430;
@@ -147,8 +148,20 @@ function getRendererPixelRatio(width) {
 
 function getViewportSize() {
 	const viewport = window.visualViewport;
-	const width = Math.floor(viewport?.width ?? window.innerWidth);
-	const height = Math.floor(viewport?.height ?? window.innerHeight);
+	const width = Math.ceil(
+		Math.max(
+			window.innerWidth,
+			viewport?.width ?? 0,
+			document.documentElement.clientWidth,
+		),
+	);
+	const height = Math.ceil(
+		Math.max(
+			window.innerHeight,
+			viewport?.height ?? 0,
+			document.documentElement.clientHeight,
+		),
+	);
 
 	return {
 		width: Math.max(1, width),
@@ -178,7 +191,7 @@ function createRenderer(canvas) {
 		antialias: RENDERER_ANTIALIAS,
 	});
 
-	renderer.setSize(width, height);
+	renderer.setSize(width, height, false);
 	renderer.setPixelRatio(getRendererPixelRatio(width));
 	return renderer;
 }
@@ -190,7 +203,7 @@ function updateCameraAndRendererSize(camera, renderer) {
 	camera.aspect = width / height;
 	camera.fov = settings.cameraFov;
 	camera.updateProjectionMatrix();
-	renderer.setSize(width, height);
+	renderer.setSize(width, height, false);
 	renderer.setPixelRatio(getRendererPixelRatio(width));
 
 	return settings;
@@ -240,6 +253,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		if (!canvas) return;
 
 		const scene = new THREE.Scene();
+		scene.background = new THREE.Color(SCENE_BACKGROUND_COLOR);
 		const camera = createCamera();
 		const renderer = createRenderer(canvas);
 		const group = new THREE.Group();
@@ -393,6 +407,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		window.addEventListener("resize", onResize);
 		window.addEventListener("orientationchange", onResize);
 		visualViewport?.addEventListener("resize", onResize);
+		visualViewport?.addEventListener("scroll", onResize);
 		window.addEventListener("scroll", onScroll, { passive: true });
 		onResize();
 		onScroll();
@@ -474,6 +489,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 			window.removeEventListener("resize", onResize);
 			window.removeEventListener("orientationchange", onResize);
 			visualViewport?.removeEventListener("resize", onResize);
+			visualViewport?.removeEventListener("scroll", onResize);
 			window.removeEventListener("scroll", onScroll);
 			renderer.dispose();
 		};

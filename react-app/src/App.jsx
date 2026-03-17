@@ -9,13 +9,13 @@ import Footer from "./components/Footer";
 function App() {
 	//sometimes i touch my pp at night
 	return (
-		<div className=" bg-black">
+		<div className=" bg-cyber-void">
 			<Background id="backbg" />
 			<Title />
 			<Introduction />
 			<Portfolio />
 			<ContactUs />
-			{/* <Footer /> */}
+			<Footer />
 		</div>
 	);
 }
