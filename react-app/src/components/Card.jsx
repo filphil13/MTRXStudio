@@ -1,64 +1,45 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import "./Card.css";
 
 function Card({ title, svg, body, link }) {
-	const [isFlipped, setIsFlipped] = useState(false);
-
-	const handleKeyDown = (event) => {
-		if (event.key === "Enter" || event.key === " ") {
-			event.preventDefault();
-			setIsFlipped((prev) => !prev);
-		}
-	};
-
 	return (
 		<div className="p-4 w-full max-w-sm">
-			<div
-				role="button"
-				tabIndex={0}
-				onClick={() => setIsFlipped((prev) => !prev)}
-				onKeyDown={handleKeyDown}
-				className={`flip-card ${isFlipped ? "flipped" : ""}`}
-			>
-				<div className="flip-card-inner">
-					<div className="flip-face flip-front flex h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
-						<div className="mb-3 text-center">
-							<div className="card-icon-wrap w-52 h-52 mx-auto my-6 flex items-center justify-center text-white">
-								{svg}
-							</div>
-							<h1 className="text-white dark:text-white text-lg font-medium">
-								{title}
-							</h1>
-						</div>
-					</div>
+			<div className="card-shell group relative rounded-2xl p-[1px] transition-all duration-300 hover:-translate-y-1">
+				<div className="card-gradient-border absolute inset-0 rounded-2xl opacity-0 transition-all duration-300 group-hover:opacity-100" />
 
-					<div className="flip-face flip-back items-center flex h-full dark:bg-gray-800 bg-[#1f2d3a] p-8 flex-col">
-						<h2 className="text-white text-lg font-medium mb-3">
+				<article className="card-inner relative z-10 flex h-full min-h-[420px] flex-col rounded-2xl border border-cyber-border bg-cyber-surface p-8 transition-all duration-300 group-hover:border-transparent group-hover:shadow-[0_0_25px_rgba(255,46,219,0.12)]">
+					<div className="mb-6 text-center">
+						<div className="card-icon-wrap mx-auto my-6 flex h-52 w-52 items-center justify-center text-cyber-text transition-all duration-300 group-hover:text-cyber-accent">
+							{svg}
+						</div>
+
+						<h2 className="text-cyber-text text-lg font-medium">
 							{title}
 						</h2>
-						<p className="leading-relaxed text-base text-center text-gray-200">
-							{body}
-						</p>
-						<a
-							href={link}
-							className="mt-6 text-white hover:text-blue-400 inline-flex items-center justify-center"
-						>
-							Learn More
-							<svg
-								fill="none"
-								stroke="currentColor"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								className="w-4 h-4 ml-2"
-								viewBox="0 0 24 24"
-							>
-								<path d="M5 12h14M12 5l7 7-7 7"></path>
-							</svg>
-						</a>
 					</div>
-				</div>
+
+					<p className="text-cyber-muted text-base leading-relaxed text-center flex-grow">
+						{body}
+					</p>
+
+					<a
+						href={link}
+						className="mt-6 inline-flex items-center justify-center font-medium text-cyber-text transition-all duration-300 hover:text-cyber-accent"
+					>
+						Learn More
+						<svg
+							fill="none"
+							stroke="currentColor"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth="2"
+							className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+							viewBox="0 0 24 24"
+						>
+							<path d="M5 12h14M12 5l7 7-7 7"></path>
+						</svg>
+					</a>
+				</article>
 			</div>
 		</div>
 	);

@@ -13,7 +13,7 @@ function Introduction() {
 				We Do
 			</h2>
 
-			<div className="flex flex-wrap justify-center gap-2 mt-10 w-full max-w-screen-xl px-2">
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
 				<Card
 					title="Website Design"
 					svg={
