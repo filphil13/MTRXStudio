@@ -1,39 +1,12 @@
-.flip-card {
-  position: relative;
-  width: 100%;
-  height: 360px;
-  cursor: pointer;
-  perspective: 1000px;
+.card-gradient-border {
+	background: linear-gradient(90deg, #a855f7 0%, #ff2edb 50%, #ff6bff 100%);
+	filter: blur(2px);
 }
 
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.55s ease;
-  transform-style: preserve-3d;
+.card-inner {
+	backdrop-filter: blur(10px);
 }
 
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.flip-back {
-  transform: rotateY(180deg);
-}
-
-.card-icon-wrap svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  margin: 0 auto;
+.card-shell:hover .card-gradient-border {
+	box-shadow: 0 0 30px rgba(255, 46, 219, 0.18);
 }
