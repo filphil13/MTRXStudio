@@ -30,12 +30,12 @@ function ContactUs() {
 		>
 			<div className="grid grid-cols-1 text-center items-center gap-16 p-6 mx-auto w-full max-w-2xl  min-h-[calc(100vh-7rem)] justify-center">
 				<div>
-					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
+					<h2 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 							Let's
 						</span>{" "}
 						Talk
-					</h1>
+					</h2>
 					<p className="text-[15px] text-slate-300 mt-4 leading-relaxed">
 						Have some big idea or brand to develop and need help?
 						Then reach out we'd love to hear about your project and
@@ -102,7 +102,7 @@ function ContactUs() {
 									</svg>
 								</div>
 								<a
-									href="mailto:info@example.com"
+									href="mailto:info@mtrxstudio.com"
 									className="text-sm ml-4"
 								>
 									{/* <small className="block text-slate-300">
@@ -119,7 +119,7 @@ function ContactUs() {
 									transition-[background-size,color] duration-300 text-xl
 	"
 									>
-										info@example.com
+										info@mtrxstudio.com
 									</span>
 								</a>
 							</li>
