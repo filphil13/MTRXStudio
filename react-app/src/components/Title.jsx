@@ -19,7 +19,7 @@ function Title() {
 					that want more leads, trust, and sales.
 				</p>
 
-				<div className="mt-8 flex justify-center gap-4">
+				<div className="mt-8 flex flex-col px-6 sm:flex-row justify-center gap-4 w-full sm:w-auto">
 					<a
 						href="#contact"
 						className="
