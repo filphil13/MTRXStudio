@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import Button from "./ui/Button";
 
 function ContactUs() {
 	const form = useRef();
@@ -30,12 +31,12 @@ function ContactUs() {
 		>
 			<div className="grid grid-cols-1 text-center items-center gap-16 p-6 mx-auto w-full max-w-2xl  min-h-[calc(100vh-7rem)] justify-center">
 				<div>
-					<h2 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
+					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 							Let's
 						</span>{" "}
 						Talk
-					</h2>
+					</h1>
 					<p className="text-[15px] text-slate-300 mt-4 leading-relaxed">
 						Have some big idea or brand to develop and need help?
 						Then reach out we'd love to hear about your project and
@@ -119,25 +120,20 @@ function ContactUs() {
 								</span>
 
 								<a
-									href="mailto:info@mtrxstudio.com"
-									className="text-sm ml-4"
+									href="mailto:info@example.com"
+									className="
+										font-semibold text-cyber-text text-lg
+
+										bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
+										bg-clip-text
+										bg-[length:0%_100%] bg-no-repeat
+										hover:bg-[length:100%_100%]
+										hover:text-transparent
+
+										transition-[background-size,color] duration-300
+										"
 								>
-									{/* <small className="block text-slate-300">
-										Mail
-									</small> */}
-									<span
-										className="
-									font-semibold text-cyber-text cursor-pointer
-									bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
-									bg-clip-text
-									bg-[length:0%_100%] bg-no-repeat
-									hover:bg-[length:100%_100%]
-									hover:text-transparent
-									transition-[background-size,color] duration-300 text-xl
-	"
-									>
-										info@mtrxstudio.com
-									</span>
+									info@mtrx-studio.com
 								</a>
 							</div>
 						</div>
@@ -443,27 +439,14 @@ function ContactUs() {
 						</label>
 					</div>
 
-					<button
+					<Button
+						variant="primary"
 						type="submit"
 						disabled={disableSubmit}
-						className="
-							text-cyber-text bg-cyber-accent hover:shadow-cyber-glow/50
-							tracking-wide rounded-xl font-semibold
-							px-4 py-3 w-full cursor-pointer !mt-2
-							border border-cyber-border shadow-lg shadow-emerald-900/20
-
-							bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
-							bg-[length:0%_100%] bg-no-repeat
-							hover:bg-[length:100%_100%]
-							transition-[background-size,box-shadow,transform] duration-300
-							hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000]
-							hover:scale-[1.01] active:scale-[0.99]
-							text-lg
-							disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
-							"
+						className="w-full !mt-2"
 					>
-						Send message
-					</button>
+						{disableSubmit ? "Sending..." : "Send message"}
+					</Button>
 				</form>
 			</div>
 		</section>

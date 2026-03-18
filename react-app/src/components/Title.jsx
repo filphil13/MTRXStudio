@@ -1,3 +1,5 @@
+import Button from "./ui/Button";
+
 function Title() {
 	return (
 		<section
@@ -20,36 +22,13 @@ function Title() {
 				</p>
 
 				<div className="mt-8 flex flex-col px-6 sm:flex-row justify-center gap-4 w-full sm:w-auto">
-					<a
-						href="#contact"
-						className="
-						px-6 py-3 rounded-lg font-semibold text-cyber-text
-						border border-cyber-border
-						bg-cyber-accent
-						bg-[length:0%_100%]
-						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
-						bg-no-repeat
-						hover:bg-[length:100%_100%]
-						transition-[background-size,box-shadow] duration-300
-						shadow-lg hover:shadow-cyber-glow/50 
-						hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000]
-						text-lg"
-					>
-						Book a Free Discovery Call
-					</a>
-					<a
-						href="#portfolio"
-						className="px-6 py-3 rounded-lg font-semibold
-						text-cyber-accent bg-cyber-void border border-cyber-border
-						hover:bg-cyber-purpleHover
-						bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow
-						bg-[length:0%_100%] bg-no-repeat hover:bg-[length:100%_100%]
-						transition-[background-size,box-shadow] duration-300 shadow-lg hover:shadow-cyber-glow/50
-						hover:text-cyber-text hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000] text-lg
-						"
-					>
+					<Button variant="primary" as="a" href="#contact">
+						Book Free Discovery Call
+					</Button>
+
+					<Button variant="secondary" as="a" href="#contact">
 						View Portfolio
-					</a>
+					</Button>
 				</div>
 			</div>
 		</section>
