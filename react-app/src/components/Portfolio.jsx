@@ -1,4 +1,4 @@
-import PortfolioCard3D from "./PorfolioCard3D";
+import PortfolioCard3D from "./ui/PorfolioCard3D";
 function Portfolio() {
 	return (
 		<section
