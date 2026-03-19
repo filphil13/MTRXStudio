@@ -4,6 +4,7 @@ function Team() {
 	const teamMembers = [
 		{
 			name: "All Jay Gaco",
+			shortName: "All Jay",
 			role: "Front-End Development / UI",
 			bio: "I focus on creating modern, user-friendly websites that help businesses look more credible and connect better with their audience. I’m currently studying Web Development at Fanshawe College, where I’ve gained over two years of hands-on experience building responsive, front-end applications and refining user experience. I focus on crafting interfaces that feel clean, intuitive, and professional.",
 			traits: ["Front-End Focused", "Mobile-First", "Clean UI"],
@@ -11,6 +12,7 @@ function Team() {
 		},
 		{
 			name: "Fil Madureira",
+			shortName: "Fil",
 			role: "Development / Systems",
 			bio: "I focus on the technical side of our builds, helping ensure everything runs smoothly, efficiently, and reliably. Currently completing a Computer Science degree at TMU, I bring a strong foundation in software development, problem-solving, and system design to every project. I work across the stack to make sure what we build not only looks good, but performs well and scales properly.",
 			traits: [
@@ -22,6 +24,7 @@ function Team() {
 		},
 		{
 			name: "Josh Welcher",
+			shortName: "Josh",
 			role: "Creative / Technical",
 			bio: "I bridge the gap between creative direction and technical execution. With experience in Python, 3D modeling, and digital design, I help bring ideas to life in ways that feel unique and engaging. From visual concepts to technical problem-solving, I focus on making sure our projects stand out while still being practical and well-executed.",
 			traits: ["Creative Tech", "3D & Design", "Problem Solving"],
@@ -116,7 +119,9 @@ function Team() {
 												handleTabChange(index)
 											}
 											className={`
-												relative z-10 rounded-full px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all duration-300
+												relative z-10 flex w-full items-center justify-center
+												rounded-full px-4 sm:px-5 py-3 text-sm font-semibold
+												transition-all duration-300
 												${
 													isActive
 														? "text-cyber-text hover:[text-shadow:0.5px_0_0_#000,-0.5px_0_0_#000,0_0.5px_0_#000,0_-0.5px_0_#000]"
@@ -124,7 +129,14 @@ function Team() {
 												}
 											`}
 										>
-											{member.name}
+											{/* Mobile → First name */}
+											<span className="sm:hidden">
+												{member.shortName}
+											</span>
+
+											<span className="hidden sm:inline">
+												{member.name}
+											</span>
 										</button>
 									);
 								})}
