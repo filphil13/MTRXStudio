@@ -1,5 +1,6 @@
 import "./App.css";
 import Title from "./components/Title";
+import Team from "./components/Team";
 import Introduction from "./components/Introduction";
 import Portfolio from "./components/Portfolio";
 import ContactUs from "./components/ContactUs";
@@ -12,6 +13,7 @@ function App() {
 		<div className=" bg-cyber-void">
 			<Background id="backbg" />
 			<Title />
+			<Team />
 			<Introduction />
 			<Portfolio />
 			<ContactUs />
