@@ -43,10 +43,10 @@ function Team() {
 		const updateIndicator = () => {
 			const activeTab = tabRefs.current[activeIndex];
 			if (!activeTab) return;
-
+			const parent = activeTab.parentElement;
 			setIndicatorStyle({
 				width: `${activeTab.offsetWidth}px`,
-				transform: `translateX(${activeTab.offsetLeft}px)`,
+				transform: `translateX(${activeTab.offsetLeft - parent.offsetLeft}px)`,
 			});
 		};
 
@@ -93,7 +93,7 @@ function Team() {
 							<div
 								role="tablist"
 								aria-label="Meet the team"
-								className="relative grid w-full grid-cols-3 items-center rounded-full bg-transparent p-0"
+								className="relative grid w-full grid-cols-3 items-center rounded-full p-1"
 							>
 								<div
 									aria-hidden="true"
