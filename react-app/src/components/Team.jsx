@@ -81,9 +81,20 @@ function Team() {
 					</h2>
 
 					<p className="mt-5 text-base leading-relaxed text-cyber-muted md:text-lg">
-						We combine design, development, and strategy to build
-						websites that look premium, feel modern, and help
-						businesses convert more of the right traffic.
+						We’re a small team focused on building modern,
+						high-quality websites for businesses that want to stand
+						out and grow. Our approach is simple — combine clean
+						design, solid development, and clear strategy to create
+						websites that not only look good, but actually work. We
+						focus on user experience, performance, and clarity so
+						your audience understands your value right away. As a
+						small team, we work closely on every project. That means
+						more attention to detail, faster communication, and a
+						more flexible process from start to finish. Whether
+						you're starting from scratch or improving an existing
+						site, our goal is to deliver something that feels
+						professional, builds trust, and helps your business move
+						forward.
 					</p>
 				</div>
 
