@@ -73,11 +73,11 @@ function Team() {
 						About Us
 					</p>
 
-					<h2 className="text-4xl font-bold leading-tight text-cyber-text md:text-5xl">
-						Meet the team behind the{" "}
+					<h2 className="text-4xl font-bold font-kode leading-tight text-cyber-text md:text-5xl">
 						<span className="bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow bg-clip-text text-transparent">
-							build
-						</span>
+							Meet
+						</span>{" "}
+						the team behind the build
 					</h2>
 
 					<p className="mt-5 text-base leading-relaxed text-cyber-muted md:text-lg">
