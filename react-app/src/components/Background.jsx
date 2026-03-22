@@ -265,10 +265,14 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		// Globe
 		////////////////
 
-		const globe = new THREE.Mesh(
-			new THREE.SphereGeometry(3, MODEL_SEGMENTS, MODEL_SEGMENTS / 2),
-			new THREE.MeshBasicMaterial({
-				wireframe: true,
+		const globeGeometry = new THREE.SphereGeometry(
+			3,
+			MODEL_SEGMENTS,
+			MODEL_SEGMENTS / 2,
+		);
+		const globe = new THREE.LineSegments(
+			new THREE.EdgesGeometry(globeGeometry, 1),
+			new THREE.LineBasicMaterial({
 				color: MODEL_COLOR,
 			}),
 		);
