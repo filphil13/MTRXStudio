@@ -4,11 +4,11 @@ function Title() {
 	return (
 		<section
 			id="home"
-			className="min-h-screen flex w-full flex-col items-center bg-transparent px-6 pt-6 text-center md:px-10 lg:px-16"
+			className="flex w-full pt-0 flex-col pb-56 bg-transparent items-center md:flex-col"
 		>
-			<div className="flex min-h-[32vh] items-center justify-center">
-				<h1 className="font-kode text-4xl font-extrabold leading-tight text-cyber-text sm:text-5xl lg:text-6xl">
-					<span className="bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow bg-clip-text text-transparent">
+			<div className="flex items-center min-h-[50vh] justify-center text-center md:w-full">
+				<h1 className=" text-6xl pb-28 font-extrabold font-kode text-white  md:text-5xl lg:text-6xl">
+					<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow ">
 						MTRX
 					</span>{" "}
 					Studio

@@ -13,9 +13,11 @@ function App() {
 		<div className=" bg-cyber-void">
 			<Background id="backbg" />
 			<Title />
-			<Team />
 			<Introduction />
-			<Portfolio />
+			<Team />
+			{/* 
+                <Portfolio />
+            */}
 			<ContactUs />
 			<Footer />
 		</div>

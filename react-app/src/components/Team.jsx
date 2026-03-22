@@ -11,8 +11,8 @@ function Team() {
 			accent: "AJ",
 		},
 		{
-			name: "Fil Madureira",
-			shortName: "Fil",
+			name: "Filipe Madureira",
+			shortName: "Filipe",
 			role: "Development / Systems",
 			bio: "I focus on the technical side of our builds, helping ensure everything runs smoothly, efficiently, and reliably. Currently completing a Computer Science degree at TMU, I bring a strong foundation in software development, problem-solving, and system design to every project. I work across the stack to make sure what we build not only looks good, but performs well and scales properly.",
 			traits: [
@@ -23,8 +23,8 @@ function Team() {
 			accent: "FM",
 		},
 		{
-			name: "Josh Welcher",
-			shortName: "Josh",
+			name: "Joshua Welcher",
+			shortName: "Joshua",
 			role: "Creative / Technical",
 			bio: "I bridge the gap between creative direction and technical execution. With experience in Python, 3D modeling, and digital design, I help bring ideas to life in ways that feel unique and engaging. From visual concepts to technical problem-solving, I focus on making sure our projects stand out while still being practical and well-executed.",
 			traits: ["Creative Tech", "3D & Design", "Problem Solving"],
@@ -66,29 +66,37 @@ function Team() {
 	};
 
 	return (
-		<section id="team" className="relative px-6 py-20 md:px-10 lg:px-16">
+		<section
+			id="team"
+			className="relative px-6 pt-0 pb-56 md:px-10 lg:px-16"
+		>
 			<div className="mx-auto max-w-6xl">
 				<div className="mx-auto mb-10 max-w-3xl text-center">
-					<p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-cyber-accent">
-						About Us
-					</p>
-
-					<h2 className="text-4xl font-bold font-kode leading-tight text-cyber-text md:text-5xl">
-						<span className="bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow bg-clip-text text-transparent">
-							Meet
+					<h1 className=" text-6xl font-extrabold font-kode pb-20 text-white  md:text-5xl lg:text-6xl">
+						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow ">
+							About
 						</span>{" "}
-						the team behind the build
-					</h2>
+						Us
+					</h1>
+					<div className=" items-center pb-5 justify-center text-center md:w-full">
+						<h2 className="text-xl font-semibold font-kode leading-tight text-cyber-text md:text-3xl">
+							Meet the team behind the{" "}
+							<span className="bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow bg-clip-text text-transparent">
+								build
+							</span>
+						</h2>
+					</div>
 
-					<p className="mt-5 text-base leading-relaxed text-cyber-muted md:text-lg">
-						We build clean, modern websites that help businesses
-						look more credible and convert better. Our focus is
-						simple — quality work, clear communication, and
-						delivering results that make an impact.
+					<p className="text-base leading-relaxed pb-32 text-cyber-muted md:text-lg">
+						We’re a small team building modern, high-quality
+						websites that help businesses stand out and grow. We
+						combine clean design, strong development, and clear
+						strategy to create sites that perform, build trust, and
+						drive results.
 					</p>
 				</div>
 
-				<div className="rounded-3xl border border-cyber-border bg-cyber-surface/40 p-4 backdrop-blur-xl md:p-6">
+				<div className="rounded-3xl border  border-cyber-border bg-cyber-surface/40 p-4 backdrop-blur-xl md:p-6">
 					<div className="mx-auto mb-8 w-full max-w-3xl">
 						<div className="relative mx-auto w-full max-w-3xl">
 							<div
