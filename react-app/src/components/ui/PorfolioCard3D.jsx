@@ -5,6 +5,7 @@ export default function PortfolioCard3D({
 	coverLabel = "PROJECT PREVIEW",
 	foregroundLabel = "3D ASSET",
 	link,
+	foregroundImage,
 }) {
 	const cardContent = (
 		<article className="group relative h-[420px] w-full [perspective:2500px]">
@@ -23,21 +24,17 @@ export default function PortfolioCard3D({
             group-hover:shadow-[2px_35px_32px_-8px_rgba(0,0,0,0.75)]
           "
 				>
-					{/* placeholder cover */}
 					<div className="relative h-full w-full bg-cyber-panel border border-cyber-border">
 						<div className="absolute inset-0 bg-gradient-to-br from-cyber-surface via-cyber-panel to-cyber-void" />
 
-						{/* fake artwork grid */}
 						<div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px]" />
 
-						{/* placeholder cover label */}
 						<div className="absolute inset-0 flex items-center justify-center">
 							<div className="rounded-full border border-cyber-border bg-cyber-surface/70 px-4 py-2 text-xs font-semibold tracking-[0.25em] text-cyber-muted backdrop-blur-sm">
 								{coverLabel}
 							</div>
 						</div>
 
-						{/* top cinematic overlay */}
 						<div
 							className="
                 pointer-events-none absolute inset-x-0 top-0 h-full opacity-0
@@ -47,7 +44,6 @@ export default function PortfolioCard3D({
               "
 						/>
 
-						{/* bottom cinematic overlay */}
 						<div
 							className="
                 pointer-events-none absolute inset-x-0 bottom-0 h-[80px] opacity-100
@@ -85,7 +81,7 @@ export default function PortfolioCard3D({
 					)}
 				</div>
 
-				{/* FOREGROUND 3D ASSET PLACEHOLDER */}
+				{/* FOREGROUND HOLOGRAPHIC CARD */}
 				<div
 					className="
             pointer-events-none absolute bottom-14 left-1/2 z-20 w-[72%]
@@ -97,16 +93,26 @@ export default function PortfolioCard3D({
 				>
 					<div
 						className="
-              aspect-[4/5] rounded-2xl border border-cyber-glow/40
+              relative aspect-[4/5] overflow-hidden rounded-2xl border border-cyber-glow/40
               bg-gradient-to-b from-cyber-purple/40 via-cyber-accent/30 to-cyber-glow/20
               shadow-[0_0_30px_rgba(255,46,219,0.18)]
               backdrop-blur-sm
               flex items-center justify-center
             "
 					>
-						<span className="text-xs font-semibold tracking-[0.25em] text-cyber-text/90">
-							{foregroundLabel}
-						</span>
+						{foregroundImage ? (
+							<img
+								src={foregroundImage}
+								alt={`${title} preview`}
+								className="w-48 h-48 object-cover"
+							/>
+						) : (
+							<span className="text-xs font-semibold tracking-[0.25em] text-cyber-text/90">
+								{foregroundLabel}
+							</span>
+						)}
+
+						<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cyber-void/50 via-transparent to-white/10" />
 					</div>
 				</div>
 			</div>
@@ -120,7 +126,7 @@ export default function PortfolioCard3D({
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label={`Open project: ${title}`}
-				className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cyber-void rounded-xl"
+				className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cyber-void"
 			>
 				{cardContent}
 			</a>

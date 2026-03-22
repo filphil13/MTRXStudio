@@ -1,3 +1,4 @@
+import northpointPreview from "../assets/north-point-1.1.svg";
 import PortfolioCard3D from "./ui/PorfolioCard3D";
 function Portfolio() {
 	return (
@@ -20,6 +21,7 @@ function Portfolio() {
 						result="Result: Live deployed production site."
 						coverLabel="LIVE SITE"
 						foregroundLabel="NORTHPOINT"
+						foregroundImage={northpointPreview}
 						link="https://alljay213.github.io/northpoint/"
 					/>
 
