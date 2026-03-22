@@ -4,8 +4,9 @@ export default function PortfolioCard3D({
 	result,
 	coverLabel = "PROJECT PREVIEW",
 	foregroundLabel = "3D ASSET",
+	link,
 }) {
-	return (
+	const cardContent = (
 		<article className="group relative h-[420px] w-full [perspective:2500px]">
 			<div
 				className="
@@ -76,6 +77,12 @@ export default function PortfolioCard3D({
 					<p className="text-sm font-medium text-cyber-accent">
 						{result}
 					</p>
+
+					{link && (
+						<span className="mt-4 inline-block text-sm font-medium text-cyber-glow">
+							View Project →
+						</span>
+					)}
 				</div>
 
 				{/* FOREGROUND 3D ASSET PLACEHOLDER */}
@@ -105,4 +112,20 @@ export default function PortfolioCard3D({
 			</div>
 		</article>
 	);
+
+	if (link) {
+		return (
+			<a
+				href={link}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label={`Open project: ${title}`}
+				className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cyber-void rounded-xl"
+			>
+				{cardContent}
+			</a>
+		);
+	}
+
+	return cardContent;
 }
