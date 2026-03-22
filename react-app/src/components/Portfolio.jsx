@@ -15,11 +15,12 @@ function Portfolio() {
 
 				<div className="grid grid-cols-1 gap-6 md:grid-cols-3">
 					<PortfolioCard3D
-						title="Local Service Business"
-						description="Redesigned a dated website into a modern, mobile-first lead generation site."
-						result="Result: More quote requests in the first month."
-						coverLabel="SERVICE SITE"
-						foregroundLabel="PHONE MOCKUP"
+						title="Northpoint Heating & Cooling"
+						description="Modern HVAC business website built for lead generation with a clean, mobile-first layout and strong local service branding."
+						result="Result: Live deployed production site."
+						coverLabel="LIVE SITE"
+						foregroundLabel="NORTHPOINT"
+						link="https://alljay213.github.io/northpoint/"
 					/>
 
 					<PortfolioCard3D
