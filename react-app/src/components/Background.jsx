@@ -46,8 +46,13 @@ const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
 const STAR_COUNT = 200;
 const STAR_SIZE = 0.1;
 const STAR_COLOR = 0xffffff;
-const STAR_SPREAD_RADIUS = 150;
 const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
+const STAR_SPAWN_WIDTH = 320;
+const STAR_SPAWN_HEIGHT = 220;
+const STAR_SPAWN_DEPTH = 220;
+const STAR_SPAWN_CENTER_X = 0;
+const STAR_SPAWN_CENTER_Y = 0;
+const STAR_SPAWN_CENTER_Z = -50;
 
 //Side Wall Variables
 const WALL1_POSITION_X = 5;
@@ -339,10 +344,19 @@ function Background({ id = CANVAS_ID, className = "" }) {
 			});
 			const star = new THREE.Mesh(geometry, material);
 
-			const [x, y, z] = Array(3)
-				.fill()
-				.map(() => THREE.MathUtils.randFloatSpread(STAR_SPREAD_RADIUS));
-			star.position.set(x, y, z-50);
+			const x = THREE.MathUtils.randFloat(
+				STAR_SPAWN_CENTER_X - STAR_SPAWN_WIDTH / 2,
+				STAR_SPAWN_CENTER_X + STAR_SPAWN_WIDTH / 2,
+			);
+			const y = THREE.MathUtils.randFloat(
+				STAR_SPAWN_CENTER_Y - STAR_SPAWN_HEIGHT / 2,
+				STAR_SPAWN_CENTER_Y + STAR_SPAWN_HEIGHT / 2,
+			);
+			const z = THREE.MathUtils.randFloat(
+				STAR_SPAWN_CENTER_Z - STAR_SPAWN_DEPTH / 2,
+				STAR_SPAWN_CENTER_Z + STAR_SPAWN_DEPTH / 2,
+			);
+			star.position.set(x, y, z);
 			scene.add(star);
 		};
 
