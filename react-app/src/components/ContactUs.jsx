@@ -5,8 +5,11 @@ import Button from "./ui/Button";
 function ContactUs() {
 	const form = useRef();
 	const [disableSubmit, setDisableSubmit] = useState(false);
+    const [buttonText, setButtonText] = useState("Send message");
 
 	const sendEmail = (e) => {
+        setDisableSubmit(true);
+        setButtonText("Sending...");
 		e.preventDefault();
 
 		emailjs
@@ -17,9 +20,12 @@ function ContactUs() {
 				() => {
 					console.log("SUCCESS!");
 					setDisableSubmit(true);
+                    setButtonText("Sent!");
 				},
 				(error) => {
 					console.log("FAILED...", error.text);
+                    setButtonText("Send message");
+                    setDisableSubmit(false);
 				},
 			);
 	};
@@ -355,10 +361,11 @@ function ContactUs() {
 					<Button
 						variant="primary"
 						type="submit"
+                        id="contact-submit"
 						disabled={disableSubmit}
 						className="w-full !mt-2"
 					>
-						{disableSubmit ? "Sending..." : "Send message"}
+						{buttonText}
 					</Button>
 				</form>
 			</div>
