@@ -43,10 +43,10 @@ const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
 const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
 
 //Star Variables
-const STAR_COUNT = 500;
+const STAR_COUNT = 200;
 const STAR_SIZE = 0.1;
 const STAR_COLOR = 0xffffff;
-const STAR_SPREAD_RADIUS = 300;
+const STAR_SPREAD_RADIUS = 150;
 const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
 
 //Side Wall Variables
@@ -335,14 +335,14 @@ function Background({ id = CANVAS_ID, className = "" }) {
 			const material = new THREE.MeshBasicMaterial({
 				color: STAR_COLOR,
 				blending: THREE.AdditiveBlending, // Makes the star appear to glow
-				wireframe: true, // Adds a wireframe for a more stylized look
+				wireframe: false, // Adds a wireframe for a more stylized look
 			});
 			const star = new THREE.Mesh(geometry, material);
 
 			const [x, y, z] = Array(3)
 				.fill()
 				.map(() => THREE.MathUtils.randFloatSpread(STAR_SPREAD_RADIUS));
-			star.position.set(x, y, z);
+			star.position.set(x, y, z-50);
 			scene.add(star);
 		};
 
