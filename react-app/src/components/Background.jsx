@@ -47,12 +47,12 @@ const STAR_COUNT = 200;
 const STAR_SIZE = 0.1;
 const STAR_COLOR = 0xffffff;
 const STAR_SEGMENTS = 8; // Lower segments for a more stylized, low-poly look
-const STAR_SPAWN_WIDTH = 320;
-const STAR_SPAWN_HEIGHT = 220;
+const STAR_SPAWN_WIDTH = 400;
+const STAR_SPAWN_HEIGHT = 320;
 const STAR_SPAWN_DEPTH = 220;
 const STAR_SPAWN_CENTER_X = 0;
 const STAR_SPAWN_CENTER_Y = 0;
-const STAR_SPAWN_CENTER_Z = -50;
+const STAR_SPAWN_CENTER_Z = -150;
 
 //Side Wall Variables
 const WALL1_POSITION_X = 5;
