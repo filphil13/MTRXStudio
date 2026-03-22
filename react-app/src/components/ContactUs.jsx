@@ -13,8 +13,8 @@ function ContactUs() {
 		e.preventDefault();
 
 		emailjs
-			.sendForm("service_o63cf0c", "contact_us_form", form.current, {
-				publicKey: "TCQgDxU8ohN4ocHE9",
+			.sendForm("Mtrx_Studio", "contact_us_form", form.current, {
+				publicKey: "nsFzgifHp3J6haAMV",
 			})
 			.then(
 				() => {
@@ -37,7 +37,7 @@ function ContactUs() {
 		>
 			<div className="grid grid-cols-1 text-center items-center gap-16 p-6 mx-auto w-full max-w-2xl  min-h-[calc(100vh-7rem)] justify-center">
 				<div>
-					<h1 className="mb-4 text-6xl font-extrabold font-kode text-gray-900 dark:text-cyber-text  md:text-5xl lg:text-6xl">
+					<h1 className="mb-4 text-6xl font-extrabold font-kode text-white  md:text-5xl lg:text-6xl">
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 							Let's
 						</span>{" "}

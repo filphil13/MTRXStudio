@@ -69,7 +69,7 @@ function Team() {
 		<section id="team" className="relative px-6 pt-0 pb-56 md:px-10 lg:px-16">
 			<div className="mx-auto max-w-6xl">
 				<div className="mx-auto mb-10 max-w-3xl text-center">
-                    <h1 className=" text-6xl font-extrabold font-kode pb-20 text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+                    <h1 className=" text-6xl font-extrabold font-kode pb-20 text-white  md:text-5xl lg:text-6xl">
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow ">
 							About
 						</span>{" "}

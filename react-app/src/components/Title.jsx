@@ -7,7 +7,7 @@ function Title() {
 			className="flex w-full pt-0 flex-col pb-56 bg-transparent items-center md:flex-col"
 		>
 			<div className="flex items-center min-h-[50vh] justify-center text-center md:w-full">
-				<h1 className=" text-6xl pb-28 font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+				<h1 className=" text-6xl pb-28 font-extrabold font-kode text-white  md:text-5xl lg:text-6xl">
 					<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow ">
 						MTRX
 					</span>{" "}

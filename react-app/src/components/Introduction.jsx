@@ -6,7 +6,7 @@ function Introduction() {
 			id="services"
 			className=" min-h-[calc(100vh-7rem)] pt-0 pb-64 text-gray-500"
 		>
-			<h2 className="pb-32 text-6xl font-extrabold font-kode text-gray-900 dark:text-white  md:text-5xl lg:text-6xl">
+			<h2 className="pb-32 text-6xl font-extrabold font-kode text-white  md:text-5xl lg:text-6xl">
 				<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 					What
 				</span>{" "}
