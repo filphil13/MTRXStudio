@@ -15,7 +15,7 @@ function Title() {
 				</h1>
 			</div>
 
-			<div className="flex w-full max-w-3xl flex-col items-center justify-center sm:mt-80 mt-60 ">
+			<div className="flex w-full max-w-3xl flex-col items-center justify-center sm:mt-80 mt-60 align-middle text-center">
 				<h2 className="text-balance font-kode text-2xl font-semibold leading-snug text-cyber-text sm:text-3xl md:text-4xl">
 					Websites built to earn trust and drive action.
 				</h2>
