@@ -42,8 +42,8 @@ const RING_TEXT_DEPTH = 0.01;
 const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
 const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
 const MODEL_REFERENCE_WIDTH = RING_TEXT_RADIUS * 2;
-const MODEL_SCALE_MIN = .4;
-const MODEL_SCALE_MAX = .7;
+const MODEL_SCALE_MIN = 0.4;
+const MODEL_SCALE_MAX = 0.7;
 
 //Star Variables
 const STAR_COUNT = 200;
@@ -90,7 +90,8 @@ const SCROLL_SMOOTHING = 0.08;
 
 // Canvas variables
 const CANVAS_ID = "background";
-const CANVAS_CLASS_NAME = "fixed inset-0 block h-dvh w-screen pointer-events-none z-0";
+const CANVAS_CLASS_NAME =
+	"fixed inset-0 block h-dvh w-screen pointer-events-none z-0";
 
 const SCENE_PROFILES = [
 	{
@@ -157,10 +158,18 @@ const SCENE_PROFILES = [
 
 function interpolateSceneSettings(start, end, progress) {
 	return {
-		cameraFov: THREE.MathUtils.lerp(start.cameraFov, end.cameraFov, progress),
+		cameraFov: THREE.MathUtils.lerp(
+			start.cameraFov,
+			end.cameraFov,
+			progress,
+		),
 		cameraY: THREE.MathUtils.lerp(start.cameraY, end.cameraY, progress),
 		cameraZ: THREE.MathUtils.lerp(start.cameraZ, end.cameraZ, progress),
-		groupScale: THREE.MathUtils.lerp(start.groupScale, end.groupScale, progress),
+		groupScale: THREE.MathUtils.lerp(
+			start.groupScale,
+			end.groupScale,
+			progress,
+		),
 		wallSpacingBoost: THREE.MathUtils.lerp(
 			start.wallSpacingBoost,
 			end.wallSpacingBoost,
@@ -222,7 +231,10 @@ function getViewportSize() {
 			1,
 	);
 	const height = Math.ceil(
-		viewport?.height || window.innerHeight || document.documentElement.clientHeight || 1,
+		viewport?.height ||
+			window.innerHeight ||
+			document.documentElement.clientHeight ||
+			1,
 	);
 
 	return {
@@ -283,11 +295,13 @@ function applyResponsiveLayout(camera, group, wall1, wall2, settings) {
 		Math.abs(camera.position.z - MODEL_POSITION_Z),
 	);
 	const modelHalfVisibleHeightAtDepth =
-		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * modelDepthFromCamera;
+		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) *
+		modelDepthFromCamera;
 	const modelVisibleWidthAtDepth =
 		modelHalfVisibleHeightAtDepth * 2 * camera.aspect;
 	const modelScale = THREE.MathUtils.clamp(
-		(modelVisibleWidthAtDepth * settings.groupScale) / MODEL_REFERENCE_WIDTH,
+		(modelVisibleWidthAtDepth * settings.groupScale) /
+			MODEL_REFERENCE_WIDTH,
 		MODEL_SCALE_MIN,
 		MODEL_SCALE_MAX,
 	);
@@ -299,7 +313,8 @@ function applyResponsiveLayout(camera, group, wall1, wall2, settings) {
 		Math.abs(camera.position.z - WALL1_POSITION_Z),
 	);
 	const halfVisibleHeightAtWallDepth =
-		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * wallDepthFromCamera;
+		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) *
+		wallDepthFromCamera;
 	const halfVisibleWidthAtWallDepth =
 		halfVisibleHeightAtWallDepth * camera.aspect;
 	const edgeInset = Math.max(
@@ -479,7 +494,9 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		let lastSpikeUpdate = 0;
 		let lastFrameTime = performance.now() * 0.001;
 
-		const initialSettings = getResponsiveSceneSettings(getViewportSize().width);
+		const initialSettings = getResponsiveSceneSettings(
+			getViewportSize().width,
+		);
 		applyResponsiveLayout(camera, group, wall1, wall2, initialSettings);
 		baseCameraY = initialSettings.cameraY;
 		targetCameraY = baseCameraY;
@@ -551,7 +568,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 								const direction = Math.random() < 0.5 ? -1 : 1;
 								const nextTarget =
 									direction *
-										(0.15 + Math.random() * spikeMaxOffset);
+									(0.15 + Math.random() * spikeMaxOffset);
 								targets[i] = THREE.MathUtils.lerp(
 									targets[i],
 									nextTarget,
