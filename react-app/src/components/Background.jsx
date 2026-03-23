@@ -41,6 +41,9 @@ const RING_TEXT_SIZE = 0.5;
 const RING_TEXT_DEPTH = 0.01;
 const RING_TEXT_FONT_URL = "/fonts/Kode_Mono_Regular.json";
 const RING_TILT = 0.2; // radians, tilt of the ring on the X axis
+const MODEL_REFERENCE_WIDTH = RING_TEXT_RADIUS * 2;
+const MODEL_SCALE_MIN = .4;
+const MODEL_SCALE_MAX = .7;
 
 //Star Variables
 const STAR_COUNT = 200;
@@ -71,6 +74,8 @@ const WALL_SEGMENTS = 200;
 const WALL_COLOR = 0xffffff;
 const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
 const WALL_GRADIENT_RIGHT_COLOR = "#07010f";
+const WALL_SCREEN_INSET_RATIO = 0.03;
+const WALL_SCREEN_INSET_MIN = 0.25;
 
 // Random Spike Variables
 const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
@@ -87,52 +92,53 @@ const SCROLL_SMOOTHING = 0.08;
 const CANVAS_ID = "background";
 const CANVAS_CLASS_NAME = "fixed inset-0 block h-dvh w-screen pointer-events-none z-0";
 
-// Responsive breakpoints
-const SMALL_PHONE_BREAKPOINT = 430;
-const MOBILE_BREAKPOINT = 640;
-const TABLET_BREAKPOINT = 1024;
-
-function getResponsiveSceneSettings(width) {
-	if (width <= SMALL_PHONE_BREAKPOINT) {
-		return {
-			cameraFov: 78,
-			cameraY: -1,
-			cameraZ: 8,
-			groupScale: 0.44,
-			wallX: 1.5,
-			wallY: -68,
-			pixelRatioCap: 1.3,
-			starCount: 180,
-		};
-	}
-
-	if (width < MOBILE_BREAKPOINT) {
-		return {
-			cameraFov: 74,
-			cameraY: -0.15,
-			cameraZ: 12.7,
-			groupScale: 0.42,
-			wallX: 4,
-			wallY: -72,
-			pixelRatioCap: 1.5,
-			starCount: 240,
-		};
-	}
-
-	if (width < TABLET_BREAKPOINT) {
-		return {
-			cameraFov: 66,
-			cameraY: -0.4,
-			cameraZ: 11.5,
-			groupScale: 0.46,
-			wallX: 2.5,
-			wallY: -76,
-			pixelRatioCap: 1.75,
-			starCount: 360,
-		};
-	}
-
-	return {
+const SCENE_PROFILES = [
+	{
+		width: 320,
+		cameraFov: 78,
+		cameraY: -1,
+		cameraZ: 8,
+		groupScale: 0.44,
+		wallX: 1.5,
+		wallY: -68,
+		pixelRatioCap: 1.3,
+		starCount: 180,
+	},
+	{
+		width: 430,
+		cameraFov: 78,
+		cameraY: -1,
+		cameraZ: 8,
+		groupScale: 0.44,
+		wallX: 1.5,
+		wallY: -68,
+		pixelRatioCap: 1.3,
+		starCount: 180,
+	},
+	{
+		width: 640,
+		cameraFov: 74,
+		cameraY: -0.15,
+		cameraZ: 12.7,
+		groupScale: 0.42,
+		wallX: 4,
+		wallY: -72,
+		pixelRatioCap: 1.5,
+		starCount: 240,
+	},
+	{
+		width: 1024,
+		cameraFov: 66,
+		cameraY: -0.4,
+		cameraZ: 11.5,
+		groupScale: 0.46,
+		wallX: 2.5,
+		wallY: -76,
+		pixelRatioCap: 1.75,
+		starCount: 360,
+	},
+	{
+		width: 1440,
 		cameraFov: CAMERA_FOV,
 		cameraY: CAMERA_START_Y,
 		cameraZ: CAMERA_START_Z,
@@ -141,7 +147,49 @@ function getResponsiveSceneSettings(width) {
 		wallY: WALL1_POSITION_Y,
 		pixelRatioCap: RENDERER_MAX_PIXEL_RATIO,
 		starCount: STAR_COUNT,
+	},
+];
+
+function interpolateSceneSettings(start, end, progress) {
+	return {
+		cameraFov: THREE.MathUtils.lerp(start.cameraFov, end.cameraFov, progress),
+		cameraY: THREE.MathUtils.lerp(start.cameraY, end.cameraY, progress),
+		cameraZ: THREE.MathUtils.lerp(start.cameraZ, end.cameraZ, progress),
+		groupScale: THREE.MathUtils.lerp(start.groupScale, end.groupScale, progress),
+		wallX: THREE.MathUtils.lerp(start.wallX, end.wallX, progress),
+		wallY: THREE.MathUtils.lerp(start.wallY, end.wallY, progress),
+		pixelRatioCap: THREE.MathUtils.lerp(
+			start.pixelRatioCap,
+			end.pixelRatioCap,
+			progress,
+		),
+		starCount: Math.round(
+			THREE.MathUtils.lerp(start.starCount, end.starCount, progress),
+		),
 	};
+}
+
+function getResponsiveSceneSettings(width) {
+	const clampedWidth = Math.max(
+		SCENE_PROFILES[0].width,
+		Math.min(width, SCENE_PROFILES[SCENE_PROFILES.length - 1].width),
+	);
+
+	for (let i = 0; i < SCENE_PROFILES.length - 1; i += 1) {
+		const current = SCENE_PROFILES[i];
+		const next = SCENE_PROFILES[i + 1];
+
+		if (clampedWidth >= current.width && clampedWidth <= next.width) {
+			const progress = THREE.MathUtils.inverseLerp(
+				current.width,
+				next.width,
+				clampedWidth,
+			);
+			return interpolateSceneSettings(current, next, progress);
+		}
+	}
+
+	return SCENE_PROFILES[SCENE_PROFILES.length - 1];
 }
 
 function getRendererPixelRatio(width) {
@@ -154,18 +202,13 @@ function getRendererPixelRatio(width) {
 function getViewportSize() {
 	const viewport = window.visualViewport;
 	const width = Math.ceil(
-		Math.max(
-			window.innerWidth,
-			viewport?.width ?? 0,
-			document.documentElement.clientWidth,
-		),
+		document.documentElement.clientWidth ||
+			window.innerWidth ||
+			viewport?.width ||
+			1,
 	);
 	const height = Math.ceil(
-		Math.max(
-			window.innerHeight,
-			viewport?.height ?? 0,
-			document.documentElement.clientHeight,
-		),
+		viewport?.height || window.innerHeight || document.documentElement.clientHeight || 1,
 	);
 
 	return {
@@ -219,10 +262,40 @@ function getScrollTargetY(baseCameraY) {
 }
 
 function applyResponsiveLayout(camera, group, wall1, wall2, settings) {
-	group.scale.set(settings.groupScale, settings.groupScale, settings.groupScale);
-	wall1.position.set(settings.wallX, settings.wallY, WALL1_POSITION_Z);
-	wall2.position.set(-settings.wallX, settings.wallY, WALL2_POSITION_Z);
 	camera.position.z = settings.cameraZ;
+
+	const modelDepthFromCamera = Math.max(
+		0.1,
+		Math.abs(camera.position.z - MODEL_POSITION_Z),
+	);
+	const modelHalfVisibleHeightAtDepth =
+		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * modelDepthFromCamera;
+	const modelVisibleWidthAtDepth =
+		modelHalfVisibleHeightAtDepth * 2 * camera.aspect;
+	const modelScale = THREE.MathUtils.clamp(
+		(modelVisibleWidthAtDepth * settings.groupScale) / MODEL_REFERENCE_WIDTH,
+		MODEL_SCALE_MIN,
+		MODEL_SCALE_MAX,
+	);
+	group.scale.set(modelScale, modelScale, modelScale);
+
+	// Keep side walls visually attached to viewport edges at the wall depth.
+	const wallDepthFromCamera = Math.max(
+		0.1,
+		Math.abs(camera.position.z - WALL1_POSITION_Z),
+	);
+	const halfVisibleHeightAtWallDepth =
+		Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * wallDepthFromCamera;
+	const halfVisibleWidthAtWallDepth =
+		halfVisibleHeightAtWallDepth * camera.aspect;
+	const edgeInset = Math.max(
+		WALL_SCREEN_INSET_MIN,
+		halfVisibleWidthAtWallDepth * WALL_SCREEN_INSET_RATIO,
+	);
+	const wallX = Math.max(0, halfVisibleWidthAtWallDepth - edgeInset);
+
+	wall1.position.set(wallX, settings.wallY, WALL1_POSITION_Z);
+	wall2.position.set(-wallX, settings.wallY, WALL2_POSITION_Z);
 }
 
 function applyLeftToRightGradient(geometry) {
