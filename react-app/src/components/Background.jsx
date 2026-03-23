@@ -74,8 +74,8 @@ const WALL_SEGMENTS = 200;
 const WALL_COLOR = 0xffffff;
 const WALL_GRADIENT_LEFT_COLOR = "#FF2EDB";
 const WALL_GRADIENT_RIGHT_COLOR = "#07010f";
-const WALL_SCREEN_INSET_RATIO = 0.03;
-const WALL_SCREEN_INSET_MIN = 0.25;
+const WALL_SCREEN_INSET_RATIO = 0.0001;
+const WALL_SCREEN_INSET_MIN = 0.5;
 
 // Random Spike Variables
 const SPIKE_MAX_OFFSET = 2.5; // Max inward/outward displacement
@@ -95,23 +95,25 @@ const CANVAS_CLASS_NAME = "fixed inset-0 block h-dvh w-screen pointer-events-non
 const SCENE_PROFILES = [
 	{
 		width: 320,
-		cameraFov: 78,
+		cameraFov: 60,
 		cameraY: -1,
 		cameraZ: 8,
 		groupScale: 0.44,
-		wallX: 1.5,
+		wallSpacingBoost: 1,
 		wallY: -68,
+		spikeMaxOffset: 1.2,
 		pixelRatioCap: 1.3,
 		starCount: 180,
 	},
 	{
-		width: 430,
+		width: 412,
 		cameraFov: 78,
 		cameraY: -1,
 		cameraZ: 8,
 		groupScale: 0.44,
-		wallX: 1.5,
+		wallSpacingBoost: 0.4,
 		wallY: -68,
+		spikeMaxOffset: 1,
 		pixelRatioCap: 1.3,
 		starCount: 180,
 	},
@@ -121,8 +123,9 @@ const SCENE_PROFILES = [
 		cameraY: -0.15,
 		cameraZ: 12.7,
 		groupScale: 0.42,
-		wallX: 4,
+		wallSpacingBoost: 0.2,
 		wallY: -72,
+		spikeMaxOffset: 2.1,
 		pixelRatioCap: 1.5,
 		starCount: 240,
 	},
@@ -132,8 +135,9 @@ const SCENE_PROFILES = [
 		cameraY: -0.4,
 		cameraZ: 11.5,
 		groupScale: 0.46,
-		wallX: 2.5,
+		wallSpacingBoost: 0.1,
 		wallY: -76,
+		spikeMaxOffset: 2.35,
 		pixelRatioCap: 1.75,
 		starCount: 360,
 	},
@@ -143,8 +147,9 @@ const SCENE_PROFILES = [
 		cameraY: CAMERA_START_Y,
 		cameraZ: CAMERA_START_Z,
 		groupScale: 0.5,
-		wallX: WALL1_POSITION_X,
+		wallSpacingBoost: 0,
 		wallY: WALL1_POSITION_Y,
+		spikeMaxOffset: SPIKE_MAX_OFFSET,
 		pixelRatioCap: RENDERER_MAX_PIXEL_RATIO,
 		starCount: STAR_COUNT,
 	},
@@ -156,8 +161,17 @@ function interpolateSceneSettings(start, end, progress) {
 		cameraY: THREE.MathUtils.lerp(start.cameraY, end.cameraY, progress),
 		cameraZ: THREE.MathUtils.lerp(start.cameraZ, end.cameraZ, progress),
 		groupScale: THREE.MathUtils.lerp(start.groupScale, end.groupScale, progress),
-		wallX: THREE.MathUtils.lerp(start.wallX, end.wallX, progress),
+		wallSpacingBoost: THREE.MathUtils.lerp(
+			start.wallSpacingBoost,
+			end.wallSpacingBoost,
+			progress,
+		),
 		wallY: THREE.MathUtils.lerp(start.wallY, end.wallY, progress),
+		spikeMaxOffset: THREE.MathUtils.lerp(
+			start.spikeMaxOffset,
+			end.spikeMaxOffset,
+			progress,
+		),
 		pixelRatioCap: THREE.MathUtils.lerp(
 			start.pixelRatioCap,
 			end.pixelRatioCap,
@@ -292,7 +306,10 @@ function applyResponsiveLayout(camera, group, wall1, wall2, settings) {
 		WALL_SCREEN_INSET_MIN,
 		halfVisibleWidthAtWallDepth * WALL_SCREEN_INSET_RATIO,
 	);
-	const wallX = Math.max(0, halfVisibleWidthAtWallDepth - edgeInset);
+	const wallX = Math.max(
+		0,
+		halfVisibleWidthAtWallDepth - edgeInset + settings.wallSpacingBoost,
+	);
 
 	wall1.position.set(wallX, settings.wallY, WALL1_POSITION_Z);
 	wall2.position.set(-wallX, settings.wallY, WALL2_POSITION_Z);
@@ -466,6 +483,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 		applyResponsiveLayout(camera, group, wall1, wall2, initialSettings);
 		baseCameraY = initialSettings.cameraY;
 		targetCameraY = baseCameraY;
+		let spikeMaxOffset = initialSettings.spikeMaxOffset;
 
 		group.position.set(
 			MODEL_POSITION_X,
@@ -488,6 +506,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 			applyResponsiveLayout(camera, group, wall1, wall2, settings);
 			baseCameraY = settings.cameraY;
 			targetCameraY = getScrollTargetY(baseCameraY);
+			spikeMaxOffset = settings.spikeMaxOffset;
 		};
 
 		const onScroll = () => {
@@ -532,7 +551,7 @@ function Background({ id = CANVAS_ID, className = "" }) {
 								const direction = Math.random() < 0.5 ? -1 : 1;
 								const nextTarget =
 									direction *
-									(0.15 + Math.random() * SPIKE_MAX_OFFSET);
+										(0.15 + Math.random() * spikeMaxOffset);
 								targets[i] = THREE.MathUtils.lerp(
 									targets[i],
 									nextTarget,
