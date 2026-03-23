@@ -7,7 +7,7 @@ function Portfolio() {
 			className=" min-h-[calc(100vh-7rem)] text-gray-300 px-5 py-16"
 		>
 			<div className="max-w-screen-xl mx-auto">
-				<h2 className="mb-4 text-center text-6xl font-extrabold font-kode text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+				<h2 className="mb-4 text-center text-6xl font-extrabold font-kode text-white md:text-5xl lg:text-6xl">
 					<span className="text-transparent  bg-clip-text bg-gradient-to-r from-cyber-purple via-cyber-accent to-cyber-glow">
 						Recent
 					</span>{" "}
@@ -24,23 +24,24 @@ function Portfolio() {
 						foregroundImage={northpointPreview}
 						link="https://alljay213.github.io/northpoint/"
 					/>
-
+					{/*
 					<PortfolioCard3D
-						title="E-commerce Launch"
-						description="Built a streamlined storefront with clear product pages and checkout flow."
-						result="Result: Improved conversion rate after launch."
-						coverLabel="STOREFRONT"
-						foregroundLabel="PRODUCT CARD"
+					title="E-commerce Launch"
+					description="Built a streamlined storefront with clear product pages and checkout flow."
+					result="Result: Improved conversion rate after launch."
+					coverLabel="STOREFRONT"
+					foregroundLabel="PRODUCT CARD"
 					/>
-
+					
 					<PortfolioCard3D
-						title="Startup Landing Page"
-						description="Created a conversion-focused landing page with strong messaging and CTAs."
-						result="Result: Higher demo booking volume from paid traffic."
-						coverLabel="LANDING PAGE"
-						foregroundLabel="3D PANEL"
+					title="Startup Landing Page"
+					description="Created a conversion-focused landing page with strong messaging and CTAs."
+					result="Result: Higher demo booking volume from paid traffic."
+					coverLabel="LANDING PAGE"
+					foregroundLabel="3D PANEL"
 					/>
-				</div>
+					*/}
+					</div>
 			</div>
 		</section>
 	);
