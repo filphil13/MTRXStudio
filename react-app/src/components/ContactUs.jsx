@@ -5,11 +5,12 @@ import Button from "./ui/Button";
 function ContactUs() {
 	const form = useRef();
 	const [disableSubmit, setDisableSubmit] = useState(false);
-    const [buttonText, setButtonText] = useState("Send message");
+	const [buttonText, setButtonText] = useState("Send message");
+	const [contactMethod, setContactMethod] = useState("email");
 
 	const sendEmail = (e) => {
-        setDisableSubmit(true);
-        setButtonText("Sending...");
+		setDisableSubmit(true);
+		setButtonText("Sending...");
 		e.preventDefault();
 
 		emailjs
@@ -20,12 +21,12 @@ function ContactUs() {
 				() => {
 					console.log("SUCCESS!");
 					setDisableSubmit(true);
-                    setButtonText("Sent!");
+					setButtonText("Sent!");
 				},
 				(error) => {
 					console.log("FAILED...", error.text);
-                    setButtonText("Send message");
-                    setDisableSubmit(false);
+					setButtonText("Send message");
+					setDisableSubmit(false);
 				},
 			);
 	};
@@ -145,7 +146,6 @@ function ContactUs() {
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 
@@ -319,6 +319,70 @@ function ContactUs() {
 						</label>
 					</div>
 
+					<div className="space-y-2">
+						<span className="text-xs text-cyber-muted tracking-wide">
+							How would you like to be contacted?
+						</span>
+
+						<div className="flex gap-3">
+							{/* Email */}
+							<label className="cursor-pointer flex-1">
+								<input
+									type="radio"
+									name="contact_method"
+									value="email"
+									checked={contactMethod === "email"}
+									onChange={(e) =>
+										setContactMethod(e.target.value)
+									}
+									className="hidden"
+								/>
+								<div
+									className={`
+          w-full text-center text-sm
+          px-4 py-3 rounded-xl
+          border transition-all duration-300
+          ${
+				contactMethod === "email"
+					? "bg-cyber-surface border-cyber-glow text-white shadow-[0_0_12px_rgba(255,46,219,0.15)]"
+					: "bg-cyber-surface/60 border-cyber-border text-cyber-muted hover:border-cyber-glow hover:text-white"
+			}
+        `}
+								>
+									Email
+								</div>
+							</label>
+
+							{/* Phone */}
+							<label className="cursor-pointer flex-1">
+								<input
+									type="radio"
+									name="contact_method"
+									value="phone"
+									checked={contactMethod === "phone"}
+									onChange={(e) =>
+										setContactMethod(e.target.value)
+									}
+									className="hidden"
+								/>
+								<div
+									className={`
+          w-full text-center text-sm
+          px-4 py-3 rounded-xl
+          border transition-all duration-300
+          ${
+				contactMethod === "phone"
+					? "bg-cyber-surface border-cyber-glow text-white shadow-[0_0_12px_rgba(255,46,219,0.15)]"
+					: "bg-cyber-surface/60 border-cyber-border text-cyber-muted hover:border-cyber-glow hover:text-white"
+			}
+        `}
+								>
+									Phone
+								</div>
+							</label>
+						</div>
+					</div>
+
 					<div className="relative">
 						<textarea
 							id="message"
@@ -361,7 +425,7 @@ function ContactUs() {
 					<Button
 						variant="primary"
 						type="submit"
-                        id="contact-submit"
+						id="contact-submit"
 						disabled={disableSubmit}
 						className="w-full !mt-2"
 					>
